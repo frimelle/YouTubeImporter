@@ -3,12 +3,16 @@
  */
 public class YouTubeChannel {
 	
-    private String etag;
    	private String id;
+   	private String title;
     private ContentDetails contentDetails;
 
-    public String getEtag() {
-		return etag;
+    
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getId() {
 		return id;
@@ -24,7 +28,7 @@ public class YouTubeChannel {
 	/**
 	 * @return String The ID of the play list containing the videos "liked" by the channel owner, null if no such play list exists
 	 */
-	public String getLikedVideosPlaylist() {
+	public String getLikedVideosPlaylistId() {
 		if (contentDetails != null) {
 			return contentDetails.getLikedVideos();
 		} else {
@@ -35,7 +39,7 @@ public class YouTubeChannel {
 	/**
 	 * @return String The ID of the play list containing the channel uploads, null if no such play list exists
 	 */
-	public String getUploadedVideosPlaylist() {
+	public String getUploadedVideosPlaylistId() {
 		if (contentDetails != null) {
 			return contentDetails.getUploadedVideos();
 		} else {
@@ -46,7 +50,7 @@ public class YouTubeChannel {
 	/**
 	 * @return String The ID of the play list containing the favorited videos by the channel owner, null if no such play list exists
 	 */
-	public String getFavoritedVideosPlaylist() {
+	public String getFavoritedVideosPlaylistId() {
 		if (contentDetails != null) {
 			return contentDetails.getFavoriteVideos();
 		} else {
@@ -94,6 +98,10 @@ public class YouTubeChannel {
 			}
 		}
 		
+	    /**
+	     * RelatedPlaylists sub class for YouTubeChannel/ContentDetails
+	     * Used to easily parse data with GSON
+	     */
 	    public static class RelatedPlaylists {
 	    		private String likes;
 	    		private String favorites;

@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -73,7 +74,7 @@ public class YouTubeAPI {
 		HttpsURLConnection request = (HttpsURLConnection) url.openConnection();
 	    request.connect();
 	    if (request.getResponseCode() != 200) {
-	    	throw new IOException("Response code was not 200");
+	    	throw new IOException("Response code was not 200. Check your API key and / or its available quota.");
 	    }
 	    JsonParser jsonParser = new JsonParser();
 	    JsonElement jsonElement = jsonParser.parse(new InputStreamReader((InputStream) request.getContent()));
@@ -106,13 +107,92 @@ public class YouTubeAPI {
 			Type collectionType = new TypeToken<Collection<YouTubeChannel>>(){}.getType();
 			channels = gson.fromJson(channelElement, collectionType);
 			
-			//Just grabbing "first" result, since the API only returns exact matches / one result in any case
-			channel = channels.iterator().next();
-			
+			try {
+				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
+				channel = channels.iterator().next();
+				channel.setTitle(name); //Manually setting this value because it's not returned by the API
+			} catch (NoSuchElementException e) {
+				//No channel found
+				channel = null;
+			}
 		} catch(Exception e) {
 			throw e;
 		}
 		return channel;
 	}
+	
+	/**
+	 * Builds a request to receive a YouTube Playlist by its ID
+	 * @param id The PlaylistId
+	 * @return YouTubePlaylist Playlist object
+	 * @throws Exception
+	 */
+	public YouTubePlaylist getPlaylistById(String id) throws Exception {
+		YouTubePlaylist playlist = null;
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		
+		parameters.add(new BasicNameValuePair("part", "snippet"));
+		parameters.add(new BasicNameValuePair("id", id));
+		try {
+			URL requestUrl = getRequestUrl("playlists", parameters);
+			JsonElement jsonResponse = getRequestResponse(requestUrl);
+			JsonObject jsonObject = jsonResponse.getAsJsonObject();
+			JsonElement playListItems = jsonObject.get("items");
+			
+			Gson gson = new Gson();
+			
+			//Working with a collection because the JSON is built to possibly give multiple results
+			Collection<YouTubePlaylist> playlists = null;
+			
+			Type collectionType = new TypeToken<Collection<YouTubePlaylist>>(){}.getType();
+			playlists = gson.fromJson(playListItems, collectionType);
+			
+			try {
+				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
+				playlist = playlists.iterator().next();
+			} catch (NoSuchElementException e) {
+				//No channel found
+				playlist = null;
+			}
+			
+
+		} catch(Exception e) {
+			throw e;
+		}
+		return playlist;
+	}
+	
+	/**
+	 * Builds a request to receive a YouTube Playlist by its ID
+	 * @param id The PlaylistId
+	 * @return Collection<YouTubeVideo> Collection of YouTubeVideos returned by playlist
+	 * @throws Exception
+	 */
+	protected Collection<YouTubeVideo> getPlayListItems(String id) throws Exception {
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		Collection<YouTubeVideo> playlistItems = null;
+		parameters.add(new BasicNameValuePair("part", "contentDetails"));
+		parameters.add(new BasicNameValuePair("maxResults", "50")); //50 = max videos returned per result "page", default is only 5
+		parameters.add(new BasicNameValuePair("playlistId", id));
+		try {
+			URL requestUrl = getRequestUrl("playlistItems", parameters);
+			JsonElement jsonResponse = getRequestResponse(requestUrl);
+			JsonObject jsonObject = jsonResponse.getAsJsonObject();
+			JsonElement playListItems = jsonObject.get("items");
+			
+			Gson gson = new Gson();
+			
+			Collection<YouTubeVideo> playlistItemsPage = null;
+			
+			Type collectionType = new TypeToken<Collection<YouTubeVideo>>(){}.getType();
+			playlistItems = gson.fromJson(playListItems, collectionType);
+			
+			playlistItemsPage = this.getPlayListItems(id);
+		} catch(Exception e) {
+			throw e;
+		}
+		return playlistItems;
+	}
+	
 	
 }
