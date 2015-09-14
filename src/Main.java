@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Main {
     public static void main(String[] args)  {
@@ -20,6 +21,16 @@ public class Main {
     		System.out.println(playlist.getChannelTitle());
     		System.out.println(playlist.getDescription());
     		System.out.println(playlist.getThumbnailUrl());
+    		
+    		System.out.println("\n\n--------Returning Video Test Data--------");
+    		YouTubeVideo video = api.getVideoById("jo-OE4TWhJs");
+    		System.out.println(video.getTitle());
+    		System.out.println(video.getId());
+    		System.out.println(video.getChannelId());
+    		System.out.println(video.getChannelTitle());
+    		System.out.println(video.getDescription());
+    		System.out.println(video.getThumbnailUrl());
+    		System.out.println(video.getTags());
     		
 		} catch (Exception e) {
 			e.printStackTrace();

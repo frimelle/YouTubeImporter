@@ -11,12 +11,15 @@ public class YouTubeChannel {
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
-	}
+	}	
+	
 	public String getId() {
 		return id;
 	}
+	
 	public String getGooglePlusUserId() {
 		if (contentDetails != null) {
 			return contentDetails.getGooglePlusUserId();
@@ -70,6 +73,7 @@ public class YouTubeChannel {
 		public String getGooglePlusUserId() {
 			return googlePlusUserId;
 		}		
+		
 		public void setGooglePlusUserId(String googlePlusUserId) {
 			this.googlePlusUserId = googlePlusUserId;
 		}
@@ -110,18 +114,23 @@ public class YouTubeChannel {
 				public String getLikes() {
 					return likes;
 				}
+				
 				public void setLikes(String likes) {
 					this.likes = likes;
 				}
+				
 				public String getFavorites() {
 					return favorites;
 				}
+				
 				public void setFavorites(String favorites) {
 					this.favorites = favorites;
 				}
+				
 				public String getUploads() {
 					return uploads;
 				}
+				
 				public void setUploads(String uploads) {
 					this.uploads = uploads;
 				}

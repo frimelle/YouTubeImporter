@@ -52,9 +52,7 @@ public class YouTubePlaylist {
 			return null;
 		}
 	}
-	
-	
-	
+		
     /**
      * Snippet sub class for YouTubePlaylist
      * Used to easily parse data with GSON
@@ -73,7 +71,6 @@ public class YouTubePlaylist {
     	public String getChannelTitle() {
 			return channelTitle;
 		}
-
 
 		public String getTitle() {
 			return title;

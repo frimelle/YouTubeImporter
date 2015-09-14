@@ -194,5 +194,43 @@ public class YouTubeAPI {
 		return playlistItems;
 	}
 	
+	/**
+	 * Builds a request to receive a YouTube Video by its ID
+	 * @param id The Video ID
+	 * @return YouTubeVideo The object representing the video data
+	 * @throws Exception
+	 */
+	protected YouTubeVideo getVideoById(String id) throws Exception {
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		YouTubeVideo video = null;
+		parameters.add(new BasicNameValuePair("part", "snippet"));
+		parameters.add(new BasicNameValuePair("id", id));
+		try {
+			URL requestUrl = getRequestUrl("videos", parameters);
+			JsonElement jsonResponse = getRequestResponse(requestUrl);
+			JsonObject jsonObject = jsonResponse.getAsJsonObject();
+			JsonElement playListItems = jsonObject.get("items");
+			
+			Gson gson = new Gson();
+			
+			Collection<YouTubeVideo> videos = null;
+			
+			Type collectionType = new TypeToken<Collection<YouTubeVideo>>(){}.getType();
+			videos = gson.fromJson(playListItems, collectionType);
+			try {
+				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
+				video = videos.iterator().next();
+			} catch (NoSuchElementException e) {
+				//No channel found
+				video = null;
+			}
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		return video;
+	}
+	
+	
 	
 }
