@@ -9,7 +9,6 @@ import net.sharkfw.knowledgeBase.geom.SharkGeometry;
 
 /**
  * Class to add information to the Shark knowledge base
- * @author Lucie-Aimée Kaffee, Charlie Kritschmar, Tim F. Eulitz
  * @version 1.0
  */
 
@@ -29,7 +28,7 @@ public class YouTubeKnowledgeBase {
 	  * @param address
 	  * @return semanticTag
 	  */
-	 private SemanticTag createYTSemanticTag(String name, String si) {
+	 public SemanticTag createYTSemanticTag(String name, String si) {
 	        SemanticTag semanticTag = null;
 	        try {
 	            semanticTag = knowledgeBase.createSemanticTag(name, si);
@@ -48,7 +47,7 @@ public class YouTubeKnowledgeBase {
 	  * @param address
 	  * @return semanticTag
 	  */
-	 private PeerSemanticTag createYTPeerSemanticTag(String name, String si, String address) {
+	 public PeerSemanticTag createYTPeerSemanticTag(String name, String si, String address) {
 	        PeerSemanticTag semanticTag = null;
 	        try {
 	            semanticTag = knowledgeBase.createPeerSemanticTag(name, si, address);
@@ -66,7 +65,7 @@ public class YouTubeKnowledgeBase {
 	  * @param address
 	  * @return semanticTag
 	  */
-	 private TimeSemanticTag createYTTimeSemanticTag(long from, long duration) {
+	 public TimeSemanticTag createYTTimeSemanticTag(long from, long duration) {
 	        TimeSemanticTag semanticTag = null;
 	        try {
 	            semanticTag = knowledgeBase.createTimeSemanticTag(from, duration);
@@ -84,7 +83,7 @@ public class YouTubeKnowledgeBase {
 	  * @param address
 	  * @return semanticTag
 	  */
-	 private SpatialSemanticTag createYTSpatialSemanticTag(String name, String[] sis, SharkGeometry geom) {
+	 public SpatialSemanticTag createYTSpatialSemanticTag(String name, String[] sis, SharkGeometry geom) {
 	        SpatialSemanticTag semanticTag = null;
 	        try {
 	            semanticTag = knowledgeBase.createSpatialSemanticTag(name, sis, geom);
