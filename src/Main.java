@@ -38,6 +38,10 @@ public class Main {
     		System.out.println(playlist.getDescription());
     		System.out.println(playlist.getThumbnailUrl());
     		
+    		SharkImporter yt = new SharkImporter();
+    		yt.importVideo("MDIUreSo0gI");//add scanner
+    		yt.printTags();
+    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
