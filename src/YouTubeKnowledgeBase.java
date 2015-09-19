@@ -143,5 +143,14 @@ public class YouTubeKnowledgeBase {
 	 public void setDirection(int direction) {
 		 this.direction = direction;
 	 }
+	 
+	 /**
+	  * Get the direction
+	  * 
+	  * @return int direction
+	  */
+	 public int getDirection() {
+		 return this.direction;
+	 }
 	
 }
