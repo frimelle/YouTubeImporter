@@ -1,3 +1,5 @@
+import net.sharkfw.knowledgeBase.ContextCoordinates;
+import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCS;
@@ -19,14 +21,14 @@ public class YouTubeKnowledgeBase {
 	}
 	private SharkKB knowledgeBase;
 	// Direction
-    final int direction = SharkCS.DIRECTION_OUT;
+    private int direction = SharkCS.DIRECTION_OUT;
 	 
 	 /**
 	  * create a SemanticTag
-	  * @param name
-	  * @param si
+	  * 
+	  * @param String name
 	  * @param address
-	  * @return semanticTag
+	  * @return SemanticTag semanticTag
 	  */
 	 public SemanticTag createYTSemanticTag(String name, String si) {
 	        SemanticTag semanticTag = null;
@@ -42,10 +44,11 @@ public class YouTubeKnowledgeBase {
 	 
 	 /**
 	  * create a PeerSemanticTag
-	  * @param name
-	  * @param si
+	  * 
+	  * @param String name
+	  * @param String si
 	  * @param address
-	  * @return semanticTag
+	  * @return PeerSemanticTag semanticTag
 	  */
 	 public PeerSemanticTag createYTPeerSemanticTag(String name, String si, String address) {
 	        PeerSemanticTag semanticTag = null;
@@ -60,10 +63,10 @@ public class YouTubeKnowledgeBase {
 	 
 	 /**
 	  * create a TimeSemanticTag
-	  * @param name
-	  * @param si
-	  * @param address
-	  * @return semanticTag
+	  * 
+	  * @param long from
+	  * @param long duration
+	  * @return TimeSemanticTag semanticTag
 	  */
 	 public TimeSemanticTag createYTTimeSemanticTag(long from, long duration) {
 	        TimeSemanticTag semanticTag = null;
@@ -78,10 +81,11 @@ public class YouTubeKnowledgeBase {
 	 
 	 /**
 	  * create a SpatialSemanticTag
-	  * @param name
-	  * @param si
-	  * @param address
-	  * @return semanticTag
+	  * 
+	  * @param String name
+	  * @param String[] sis
+	  * @param SharkGeometry geom
+	  * @return SpatialSemanticTag semanticTag
 	  */
 	 public SpatialSemanticTag createYTSpatialSemanticTag(String name, String[] sis, SharkGeometry geom) {
 	        SpatialSemanticTag semanticTag = null;
@@ -92,6 +96,52 @@ public class YouTubeKnowledgeBase {
 	            e.printStackTrace();
 	        }
 	        return semanticTag;
+	 }
+	 
+	 /**
+	  * create ContextCoordinates
+	  * 
+	  * @param SemanticTag topic
+	  * @param PeerSemanticTag originator
+	  * @param PeerSemanticTag peer
+	  * @param PeerSemanticTag remotepeer
+	  * @param TimeSemanticTag time
+	  * @param TimeSemanticTag location
+	  * @return ContextCoordinates cc
+	  */
+	 public ContextCoordinates createContextCoordinates(SemanticTag topic, PeerSemanticTag originator, PeerSemanticTag peer, PeerSemanticTag remotepeer, TimeSemanticTag time, SpatialSemanticTag location) {
+		 ContextCoordinates cc = null;
+		 try {
+			 cc = knowledgeBase.createContextCoordinates(topic, originator, peer, remotepeer, time, location, this.direction);
+		 } catch (SharkKBException e) {
+			 e.printStackTrace();
+		 }
+		 return cc;
+	 }
+	 
+	 /**
+	  * Create ContextCoordinates
+	  * 
+	  * @param ContextCoordinates cc
+	  * @return ContextPoint cp
+	  */
+	 public ContextPoint createContextPoint(ContextCoordinates cc) {
+		 ContextPoint cp = null;
+		 try {
+			 cp = knowledgeBase.createContextPoint(cc);
+		 } catch (SharkKBException e) {
+			 e.printStackTrace();
+		 }
+		 return cp;
+	 }
+	 
+	 /**
+	  * Set the direction
+	  * 
+	  * @param int direction
+	  */
+	 public void setDirection(int direction) {
+		 this.direction = direction;
 	 }
 	
 }
