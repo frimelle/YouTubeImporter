@@ -114,8 +114,7 @@ public class YouTubeKnowledgeBase {
 			PeerSemanticTag peer, PeerSemanticTag remotepeer, TimeSemanticTag time, SpatialSemanticTag location) {
 		ContextCoordinates cc = null;
 		try {
-			cc = knowledgeBase.createContextCoordinates(topic, originator, peer, remotepeer, time, location,
-					this.direction);
+			cc = knowledgeBase.createContextCoordinates(topic, originator, peer, remotepeer, time, location, this.direction);
 		} catch (SharkKBException e) {
 			e.printStackTrace();
 		}

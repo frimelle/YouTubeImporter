@@ -15,7 +15,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -40,13 +39,18 @@ public class YouTubeAPI {
 	private static final String API_URL = "www.googleapis.com/youtube/v3/";
 	
 	/**
+	 * List of YouTube categories. Need to be fetched if necessary, as they may change over time
+	 */
+	private Collection<YouTubeCategory> youtubeCategories;
+	
+	/**
 	 * Constructor requires YouTube v3 API key which can be requested at https://console.developers.google.com	
 	 * @param apiKey
 	 * @throws IllegalArgumentException
 	 */
 	public YouTubeAPI(String apiKey) throws IllegalArgumentException {
 		if (apiKey.length() < 32) {
-			throw new IllegalArgumentException("Please supply a YouTube API key.");
+			throw new IllegalArgumentException("Please supply a YouTube API key. You may acquire one for free at at https://console.developers.google.com");
 		}
 		this.apiKey = apiKey;
 	}
@@ -74,7 +78,7 @@ public class YouTubeAPI {
 		HttpsURLConnection request = (HttpsURLConnection) url.openConnection();
 	    request.connect();
 	    if (request.getResponseCode() != 200) {
-	    	throw new IOException("Response code was not 200. Check your API key and / or its available quota.");
+	    	throw new IOException("Response code was not 200. Check your API key and / or its available quota. Affected query URL:\n " + url);
 	    }
 	    JsonParser jsonParser = new JsonParser();
 	    JsonElement jsonElement = jsonParser.parse(new InputStreamReader((InputStream) request.getContent()));
@@ -203,7 +207,7 @@ public class YouTubeAPI {
 	protected YouTubeVideo getVideoById(String id) throws Exception {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		YouTubeVideo video = null;
-		parameters.add(new BasicNameValuePair("part", "snippet"));
+		parameters.add(new BasicNameValuePair("part", "snippet,recordingDetails"));
 		parameters.add(new BasicNameValuePair("id", id));
 		try {
 			URL requestUrl = getRequestUrl("videos", parameters);
@@ -229,6 +233,50 @@ public class YouTubeAPI {
 			throw e;
 		}
 		return video;
+	}
+	
+	/**
+	 * Builds a request to fetch all YouTube categories
+	 * @return Collection<YouTubeCategory List of all YouTube categories
+	 * @throws Exception
+	 */
+	protected void queryCategories() throws Exception {
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(new BasicNameValuePair("part", "snippet"));
+		parameters.add(new BasicNameValuePair("regionCode", "DE"));
+		try {
+			URL requestUrl = getRequestUrl("videoCategories", parameters);
+			JsonElement jsonResponse = getRequestResponse(requestUrl);
+			JsonObject jsonObject = jsonResponse.getAsJsonObject();
+			JsonElement playListItems = jsonObject.get("items");
+			
+			Gson gson = new Gson();		
+			
+			Type collectionType = new TypeToken<Collection<YouTubeCategory>>(){}.getType();
+			this.youtubeCategories = gson.fromJson(playListItems, collectionType);
+			
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
+	 * Builds a request to fetch all YouTube categories
+	 * @return Collection<YouTubeCategory List of all YouTube categories
+	 * @throws Exception
+	 */
+	protected YouTubeCategory getCategoryById(String id) throws Exception {
+		//Only fetch categories from API if the current API instance has not fetched them yet
+		if (this.youtubeCategories == null) {
+			this.queryCategories();
+		}
+		
+		for (YouTubeCategory category : this.youtubeCategories) {
+			if (category.getId().equals(id)) {
+				return category;
+			}
+		}		
+		return null;
 	}
 	
 	
