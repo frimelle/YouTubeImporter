@@ -16,83 +16,60 @@ import net.sharkfw.knowledgeBase.TimeSemanticTag;
 
 public class SharkImporter {
 	
-	public SharkImporter(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
-		//this.video = video;
-		this.ytkb = ytkb;
-	}
+	private YouTubeAPI api;
+	private YouTubeKnowledgeBase ytkb;
 
-	YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-	YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
+	/**
+	 * Constructor  
+	 */
+	public SharkImporter(YouTubeKnowledgeBase ytkb, String apiKey) {
+		this.ytkb = ytkb;		
+		this.api = new YouTubeAPI(apiKey);
+	}
 	
 	/**
 	 * Get and store information from API Videos calls in Shark Knowledgebase 
 	 */
-	public void importVideo(String vid){
+	public ContextPoint importVideo(String videoID){
 		
-		PeerSemanticTag originatorVid;
-		PeerSemanticTag peerVid;
-		PeerSemanticTag remotePeerVid;
-		SemanticTag topicVid;
-		TimeSemanticTag timeVid;
-		SpatialSemanticTag locationVid;
-		
+		YouTubeVideo video = null;
+		ContextPoint copo = null;
 		try {
-			//take videoID from console
-			YouTubeVideo video = api.getVideoById(vid);			
-			originatorVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-			peerVid = 		ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-			remotePeerVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-			topicVid = 		ytkb.createYTSemanticTag(video.getDescription(), "URL");
-			timeVid = 		ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0);
-			if (video.getLocation() != null){
-				locationVid =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
-			}else{
-				locationVid = null;
-			}		
-			//not done
-			ContextCoordinates coco;
-			ContextPoint copo;
-			
-			coco = ytkb.createContextCoordinates(topicVid, originatorVid, peerVid, remotePeerVid, timeVid, locationVid);			
-			copo = ytkb.createContextPoint(coco);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			video = api.getVideoById(videoID);
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
-		
+		if (video != null){
+			SharkVideo sv = new SharkVideo(video, ytkb);
+			copo = sv.importVideo();
+		}	
+		return copo;
 	}
 	
 	/**
 	 * Get and store information from API Channel calls in Shark Knowledgebase 
 	 */
-	public void importChannel(){
+	public ContextPoint importChannel(String channelName){
 		
-		PeerSemanticTag originatorCh;
-		PeerSemanticTag peerCh;
-		PeerSemanticTag remotePeerCh;
-		SemanticTag topicCh;
-		TimeSemanticTag timeCh;
-		SpatialSemanticTag locationCh;
-		
-		try {
-			YouTubeChannel channel = api.getChannelByName("PewDiePie");
-			
-			originatorCh = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
-			peerCh = 		ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
-			remotePeerCh = 	ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
-			topicCh = 		ytkb.createYTSemanticTag(channel.getTitle(), "URL");
-			//timeCh = 		ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimeStamp(), 0);
-			//locationCh =		ytkb.createYTSpatialSemanticTag(country);
-			
+		YouTubeChannel channel = null;
+		ContextPoint copo = null;
+				
+		try{			
+			channel = api.getChannelByName(channelName);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (channel != null){
+			SharkChannel sc = new SharkChannel();
+			copo = sc.importChannel;
+		}
+		return copo;
 	}
 	
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public void importPlaylist(){
+	public void importPlaylist(YouTubePlaylist playlist){
 		
 		PeerSemanticTag originatorPl;
 		PeerSemanticTag peerPl;
@@ -102,8 +79,6 @@ public class SharkImporter {
 		SpatialSemanticTag locationPl;
 		
 		try {
-			YouTubeChannel channel = api.getChannelByName("PewDiePie");
-			YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
 			
 			originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "URL", null); 
 			peerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
