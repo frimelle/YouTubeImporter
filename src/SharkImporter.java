@@ -34,13 +34,13 @@ public class SharkImporter {
 		try {
 			//take videoID from console
 			YouTubeVideo video = api.getVideoById(vid);//would be great if URL
-			YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();	
+			//YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();	
 			
 			originatorVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			peerVid = 		ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			remotePeerVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			topicVid = 		ytkb.createYTSemanticTag(video.getDescription(), "URL");
-			timeVid = 		ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
+			timeVid = 		ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0);
 			if (video.getLocation() != null){
 				locationVid =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 			}else{
@@ -73,13 +73,12 @@ public class SharkImporter {
 		
 		try {
 			YouTubeChannel channel = api.getChannelByName("PewDiePie");
-			//YouTubeChannel.Snippet sn = new YouTubeChannel.Snippet();
 			
 			originatorCh = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
 			peerCh = 		ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
 			remotePeerCh = 	ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
 			topicCh = 		ytkb.createYTSemanticTag(channel.getTitle(), "URL");
-			//timeCh = 		ytkb.createYTTimeSemanticTag(sn.getPublishedAt(), 0);
+			//timeCh = 		ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimeStamp(), 0);
 			//locationCh =		ytkb.createYTSpatialSemanticTag(country);
 			
 		} catch (Exception e) {
@@ -102,13 +101,12 @@ public class SharkImporter {
 		try {
 			YouTubeChannel channel = api.getChannelByName("PewDiePie");
 			YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
-			YouTubePlaylist.Snippet sni = new YouTubePlaylist.Snippet();
 			
-			//originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.channelTitle(), "URL", null); //make that
+			originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "URL", null); 
 			peerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 			remotePeerPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 			topicPl = 		ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
-			//timePl = 		ytkb.createYTTimeSemanticTag(sni.getPublishedAt(), 0); //not written yet
+			//timePl = 		ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimeStamp(), 0); //not written yet
 			locationPl =		null;
 			
 		} catch (Exception e) {
