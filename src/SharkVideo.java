@@ -20,6 +20,10 @@ public class SharkVideo {
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
 	
+	/**
+	 * Constructor for the video
+	 * @param videoID
+	 */
 	public SharkVideo(String videoID) {
 		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
 		YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	

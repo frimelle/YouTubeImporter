@@ -20,6 +20,10 @@ public class SharkChannel {
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
 	
+	/**
+	 * Constructor for the Channel
+	 * @param channelName
+	 */
 	public SharkChannel(String channelName) {
 		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
 		YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
