@@ -15,6 +15,11 @@ import net.sharkfw.knowledgeBase.TimeSemanticTag;
  */
 
 public class SharkImporter {
+	
+	public SharkImporter(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
+		this.video = video;
+		this.ytkb = ytkb;
+	}
 
 	YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
 	YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
@@ -33,8 +38,7 @@ public class SharkImporter {
 		
 		try {
 			//take videoID from console
-			YouTubeVideo video = api.getVideoById(vid);//would be great if URL
-			//YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();	
+			YouTubeVideo video = api.getVideoById(vid);
 			
 			originatorVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			peerVid = 		ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
