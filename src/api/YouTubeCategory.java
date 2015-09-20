@@ -2,6 +2,8 @@ package api;
 
 public class YouTubeCategory {
 
+	static final String URL_PREFIX = "https://www.youtube.com/channel/";
+	
 	private String id;
 	private Snippet snippet;
 	
@@ -20,6 +22,14 @@ public class YouTubeCategory {
 	public String getChannelId() {
 		if (snippet != null) {
 			return snippet.getChannelId();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getUrl() {
+		if (getChannelId() != null) {
+			return URL_PREFIX + getChannelId();
 		} else {
 			return null;
 		}

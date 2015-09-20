@@ -3,7 +3,6 @@ package api;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.joda.time.DateTime;
 
@@ -11,6 +10,8 @@ import org.joda.time.DateTime;
  * This class represents YouTube channels which represent user accounts on YouTube
  */
 public class YouTubeChannel {
+	
+	static final String URL_PREFIX = "https://www.youtube.com/channel/";
 	
    	private String id;
     private ContentDetails contentDetails;
@@ -114,8 +115,13 @@ public class YouTubeChannel {
 		}
 	}
 	
-	
-
+	public String getUrl() {
+		if (getId() != null) {
+			return URL_PREFIX + getId();
+		} else {
+			return null;
+		}
+	}
 	
     /**
      * ContentDetails sub class for YouTubeChannel

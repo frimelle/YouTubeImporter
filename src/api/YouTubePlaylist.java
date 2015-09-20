@@ -3,6 +3,9 @@ package api;
 import java.util.Collection;
 
 public class YouTubePlaylist {
+	
+	static final String URL_PREFIX = "https://www.youtube.com/playlist?list=";
+	
 	private String id;
 	private Snippet snippet;
 	private Collection<YouTubeVideo> videos;
@@ -50,6 +53,14 @@ public class YouTubePlaylist {
 	public String getChannelTitle() {
 		if (snippet != null) {
 			return snippet.getChannelTitle();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getUrl() {
+		if (getId() != null) {
+			return URL_PREFIX + getId();
 		} else {
 			return null;
 		}

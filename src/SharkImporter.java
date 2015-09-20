@@ -17,7 +17,7 @@ import net.sharkfw.knowledgeBase.TimeSemanticTag;
 public class SharkImporter {
 	
 	public SharkImporter(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
-		this.video = video;
+		//this.video = video;
 		this.ytkb = ytkb;
 	}
 

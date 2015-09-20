@@ -26,6 +26,7 @@ public class Main {
 	    		System.out.println("Longitude:" + video.getLocation().getLongitude());
 	    		System.out.println("Altitude:" + video.getLocation().getAltitude());
     		}
+    		System.out.println(video.getUrl()); 
     		
     		System.out.println("\n\n--------Returning Channel Test Data--------");
     		YouTubeChannel channel = api.getChannelByName("PewDiePie");
@@ -39,6 +40,7 @@ public class Main {
     		System.out.println(channel.getFavoritedVideosPlaylistId());
     		System.out.println(channel.getLikedVideosPlaylistId());
     		System.out.println(channel.getUploadedVideosPlaylistId());
+    		System.out.println(channel.getUrl());
     		
     		System.out.println("\n\n--------Returning Playlist Test Data--------");
     		YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
@@ -48,9 +50,10 @@ public class Main {
     		System.out.println(playlist.getChannelTitle());
     		System.out.println(playlist.getDescription());
     		System.out.println(playlist.getThumbnailUrl());
+    		System.out.println(playlist.getUrl());
     		
-    		Scanner scanner = new Scanner(System.in);
-    		System.out.println("Please enter a Video ID:");
+    		//Scanner scanner = new Scanner(System.in);
+    		//System.out.println("Please enter a Video ID:");
     		//String vidID = scanner.nextLine();
     	    //SharkVideo sv = new SharkVideo(video); //use MDIUreSo0gI
     	    //System.out.println(sv.toString());

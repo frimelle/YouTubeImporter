@@ -9,9 +9,12 @@ import org.joda.time.DateTime;
 
 public class YouTubeVideo {
 
+	static final String URL_PREFIX = "https://www.youtube.com/watch?v=";
+	
 	private String id;
 	private Snippet snippet;
 	private RecordingDetails recordingDetails;
+	
 
 	public String getId() {
 		return id;
@@ -86,6 +89,14 @@ public class YouTubeVideo {
 			return snippet.getPublishedAt();
 		} else {
 			return 0;
+		}
+	}
+	
+	public String getUrl() {
+		if (getId() != null) {
+			return URL_PREFIX + getId();
+		} else {
+			return null;
 		}
 	}
 
