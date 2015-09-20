@@ -97,7 +97,7 @@ public class YouTubeAPI {
 		YouTubeChannel channel = null;
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
-		parameters.add(new BasicNameValuePair("part", "contentDetails"));
+		parameters.add(new BasicNameValuePair("part", "contentDetails,snippet"));
 		parameters.add(new BasicNameValuePair("forUsername", name));
 		try {
 			URL requestUrl = getRequestUrl("channels", parameters);
@@ -116,7 +116,6 @@ public class YouTubeAPI {
 			try {
 				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
 				channel = channels.iterator().next();
-				channel.setTitle(name); //Manually setting this value because it's not returned by the API
 			} catch (NoSuchElementException e) {
 				//No channel found
 				channel = null;
@@ -227,7 +226,7 @@ public class YouTubeAPI {
 				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
 				video = videos.iterator().next();
 			} catch (NoSuchElementException e) {
-				//No channel found
+				//No video found
 				video = null;
 			}
 			

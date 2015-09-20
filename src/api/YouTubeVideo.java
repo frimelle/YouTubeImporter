@@ -73,19 +73,19 @@ public class YouTubeVideo {
 		}
 	}
 
-	public long getPublishedAtTimestamp() {
-		if (snippet != null) {
-			return snippet.getPublishedAt();
-		} else {
-			return 0;
-		}
-	}
-
 	public Location getLocation() {
 		if (recordingDetails != null) {
 			return recordingDetails.getLocation();
 		} else {
 			return null;
+		}
+	}
+	
+	public long getPublishedAtTimestamp() {
+		if (snippet != null) {
+			return snippet.getPublishedAt();
+		} else {
+			return 0;
 		}
 	}
 
@@ -103,7 +103,7 @@ public class YouTubeVideo {
 	}
 
 	/**
-	 * Snippet sub class for YouTubeVideo Used to easily parse data with GSON
+	 * Snippet sub class for YouTubeVideo used to easily parse data with GSON
 	 */
 	private static class Snippet {
 
