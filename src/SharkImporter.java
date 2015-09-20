@@ -60,8 +60,8 @@ public class SharkImporter {
 			e.printStackTrace();
 		}
 		if (channel != null){
-			SharkChannel sc = new SharkChannel();
-			copo = sc.importChannel;
+			SharkChannel sc = new SharkChannel(channel, ytkb);
+			copo = sc.importChannel();
 		}
 		return copo;
 	}
@@ -69,8 +69,15 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public void importPlaylist(YouTubePlaylist playlist){
+	public void importPlaylist(String channelName){
 		
+		YouTubePlaylist playlist = null;
+		try{			
+			YouTubeChannel channel = api.getChannelByName(channelName);
+			playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		PeerSemanticTag originatorPl;
 		PeerSemanticTag peerPl;
 		PeerSemanticTag remotePeerPl;
