@@ -7,6 +7,7 @@ import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
 import net.sharkfw.knowledgeBase.TimeSemanticTag;
+import net.sharkfw.system.L;
 
 /**
  * 
@@ -44,6 +45,13 @@ public class SharkChannel {
 //		}	
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
+	}
+	
+	/**
+	 * return String made of the context point
+	 */
+	 public String toString() {
+		  return L.cp2String(contextPoint);
 	}
 
 	/**
