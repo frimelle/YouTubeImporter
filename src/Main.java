@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args)  {
     	YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");
@@ -41,9 +43,9 @@ public class Main {
     		Scanner scanner = new Scanner(System.in);
     		System.out.println("Please enter a Video ID:");
     		String vidID = scanner.nextLine();
-    	    	SharkVideo sv = new SharkVideo(vidID); //use MDIUreSo0gI
-    	    	System.out.println(sv);
-    	    	scanner.close();
+    	    SharkVideo sv = new SharkVideo(vidID); //use MDIUreSo0gI
+    	    System.out.println(sv.toString());
+    	    scanner.close();
     		
 		} catch (Exception e) {
 			e.printStackTrace();

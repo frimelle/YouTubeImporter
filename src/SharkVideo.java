@@ -4,6 +4,7 @@ import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
 import net.sharkfw.knowledgeBase.TimeSemanticTag;
+import net.sharkfw.system.L;
 
 /**
  * 
@@ -38,10 +39,15 @@ public class SharkVideo {
 		time = 			ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
 		location = null;
 		if (video.getLocation() != null){
-			locationVid =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
+			location =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 		}	
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
+		
+	}
+	
+	 public String toString() {
+		  return L.cp2String(contextPoint);
 	}
 
 	/**
