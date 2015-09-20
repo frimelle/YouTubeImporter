@@ -36,6 +36,7 @@ public class SharkChannel {
 		
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
+		
 		return contextPoint;
 	}
 

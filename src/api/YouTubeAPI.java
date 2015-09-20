@@ -251,6 +251,23 @@ public class YouTubeAPI {
 	}
 	
 	/**
+	 * Builds a request to receive a YouTube Videos by their ID
+	 * @param id The Video ID collection (from a playlist, for example)
+	 * @return YouTubeVideo The object representing the video data
+	 * @throws Exception
+	 */
+	public Collection<YouTubeVideo> getVideosById(Collection<String> ids) throws Exception {
+		Collection<YouTubeVideo> videos = new ArrayList<YouTubeVideo>();
+		for (String id : ids) {
+			YouTubeVideo video = this.getVideoById(id);
+			if (video != null) {
+				videos.add(video);
+			}
+		}
+		return videos;
+	}
+	
+	/**
 	 * Builds a request to fetch all YouTube categories
 	 * @return Collection<YouTubeCategory List of all YouTube categories
 	 * @throws Exception
