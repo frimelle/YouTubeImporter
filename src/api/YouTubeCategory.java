@@ -29,7 +29,7 @@ public class YouTubeCategory {
      * Snippet sub class for YouTubeCategory
      * Used to easily parse data with GSON
      */
-    public static class Snippet {
+    private static class Snippet {
     	
     	private String channelId;
     	private String title;

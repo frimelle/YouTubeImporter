@@ -67,7 +67,7 @@ public class YouTubeChannel {
      * ContentDetails sub class for YouTubeChannel
      * Used to easily parse data with GSON
      */
-    public static class ContentDetails {
+    private static class ContentDetails {
     	
         private String googlePlusUserId;
         private RelatedPlaylists relatedPlaylists;
@@ -108,7 +108,7 @@ public class YouTubeChannel {
 	     * RelatedPlaylists sub class for YouTubeChannel/ContentDetails
 	     * Used to easily parse data with GSON
 	     */
-	    public static class RelatedPlaylists {
+	    private static class RelatedPlaylists {
 	    		private String likes;
 	    		private String favorites;
 	    		private String uploads;

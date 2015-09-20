@@ -48,8 +48,8 @@ public class Main {
     		Scanner scanner = new Scanner(System.in);
     		System.out.println("Please enter a Video ID:");
     		String vidID = scanner.nextLine();
-    	    SharkVideo sv = new SharkVideo(vidID); //use MDIUreSo0gI
-    	    System.out.println(sv.toString());
+    	    //SharkVideo sv = new SharkVideo(video); //use MDIUreSo0gI
+    	    //System.out.println(sv.toString());
     	    scanner.close();
     		
 		} catch (Exception e) {
