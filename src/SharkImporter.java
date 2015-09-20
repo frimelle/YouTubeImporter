@@ -60,8 +60,8 @@ public class SharkImporter {
 			e.printStackTrace();
 		}
 		if (channel != null){
-			SharkChannel sc = new SharkChannel();
-			copo = sc.importChannel;
+			SharkChannel sc = new SharkChannel(channel, ytkb);
+			copo = sc.importChannel();
 		}
 		return copo;
 	}
@@ -69,26 +69,22 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public void importPlaylist(YouTubePlaylist playlist){
-		
-		PeerSemanticTag originatorPl;
-		PeerSemanticTag peerPl;
-		PeerSemanticTag remotePeerPl;
-		SemanticTag topicPl;
-		TimeSemanticTag timePl;
-		SpatialSemanticTag locationPl;
+	public ContextPoint importPlaylist(String playlistName, String channelName){
+
+		YouTubePlaylist playlist = null;
+		YouTubeChannel channel = null;
+		ContextPoint copo = null;
 		
 		try {
-			
-			originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "URL", null); 
-			peerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-			remotePeerPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-			topicPl = 		ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
-			//timePl = 		ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimeStamp(), 0); //not written yet
-			locationPl =		null;
-			
+			channel = api.getChannelByName(channelName);
+			playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (playlist != null){
+			SharkPlaylist sp = new SharkPlaylist(playlist, ytkb);
+			copo = sp.importPlaylist();
+		}
+		return copo;
 	}
 }
