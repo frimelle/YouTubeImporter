@@ -1,26 +1,27 @@
-
-import java.util.Scanner;
-
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
 import api.YouTubeVideo;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
-import net.sharkfw.knowledgeBase.Information;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
 import net.sharkfw.knowledgeBase.TimeSemanticTag;
-import net.sharkfw.knowledgeBase.geom.SharkGeometry;
-import net.sharkfw.knowledgeBase.geom.inmemory.InMemoSharkGeometry;
+
+/**
+ * Class to add information to the Shark knowledge base
+ * @version 1.0
+ */
 
 public class SharkImporter {
 
 	YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
 	YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
 	
-
+	/**
+	 * Get and store information from API Videos calls in Shark Knowledgebase 
+	 */
 	public void importVideo(String vid){
 		
 		PeerSemanticTag originatorVid;
@@ -35,9 +36,9 @@ public class SharkImporter {
 			YouTubeVideo video = api.getVideoById(vid);//would be great if URL
 			YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();	
 			
-			originatorVid = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
+			originatorVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			peerVid = 		ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-			remotePeerVid = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
+			remotePeerVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			topicVid = 		ytkb.createYTSemanticTag(video.getDescription(), "URL");
 			timeVid = 		ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
 			if (video.getLocation() != null){
@@ -58,6 +59,9 @@ public class SharkImporter {
 		
 	}
 	
+	/**
+	 * Get and store information from API Channel calls in Shark Knowledgebase 
+	 */
 	public void importChannel(){
 		
 		PeerSemanticTag originatorCh;
@@ -71,9 +75,9 @@ public class SharkImporter {
 			YouTubeChannel channel = api.getChannelByName("PewDiePie");
 			//YouTubeChannel.Snippet sn = new YouTubeChannel.Snippet();
 			
-			originatorCh = 		ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
+			originatorCh = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
 			peerCh = 		ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
-			remotePeerCh = 		ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
+			remotePeerCh = 	ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
 			topicCh = 		ytkb.createYTSemanticTag(channel.getTitle(), "URL");
 			//timeCh = 		ytkb.createYTTimeSemanticTag(sn.getPublishedAt(), 0);
 			//locationCh =		ytkb.createYTSpatialSemanticTag(country);
@@ -83,6 +87,9 @@ public class SharkImporter {
 		}
 	}
 	
+	/**
+	 * Get and store information from API Playlist calls in Shark Knowledgebase 
+	 */
 	public void importPlaylist(){
 		
 		PeerSemanticTag originatorPl;
@@ -99,7 +106,7 @@ public class SharkImporter {
 			
 			//originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.channelTitle(), "URL", null); //make that
 			peerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-			remotePeerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
+			remotePeerPl = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 			topicPl = 		ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
 			//timePl = 		ytkb.createYTTimeSemanticTag(sni.getPublishedAt(), 0); //not written yet
 			locationPl =		null;
