@@ -38,9 +38,12 @@ public class Main {
     		System.out.println(playlist.getDescription());
     		System.out.println(playlist.getThumbnailUrl());
     		
-    		SharkImporter yt = new SharkImporter();
-    		yt.importVideo("MDIUreSo0gI");//add scanner
-    		yt.printTags();
+    		Scanner scanner = new Scanner(System.in);
+    		System.out.println("Please enter a Video ID:");
+    		String vidID = scanner.nextLine();
+    	    	SharkVideo sv = new SharkVideo(vidID); //use MDIUreSo0gI
+    	    	System.out.println(sv);
+    	    	scanner.close();
     		
 		} catch (Exception e) {
 			e.printStackTrace();
