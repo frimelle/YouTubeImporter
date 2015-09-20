@@ -21,35 +21,33 @@ public class SharkVideo {
 	private SpatialSemanticTag location;
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
+	YouTubeVideo video ;
+	YouTubeKnowledgeBase ytkb;
 	
 	/**
 	 * Constructor for the video
 	 * @param videoID
 	 */
-	public SharkVideo(String videoID) {
-		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-		YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
+	public SharkVideo(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
+		this.video = video;
+		this.ytkb = ytkb;
+	}
+	
+	public ContextPoint importVideo() {
 		YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();
-		
-		YouTubeVideo video = null;
-		try {
-			video = api.getVideoById(videoID);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 		peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 		remotePeer = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 		topic = 			ytkb.createYTSemanticTag(video.getDescription(), "URL");
-		time = 			ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
+		time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0);
 		location = null;
 		if (video.getLocation() != null){
 			location =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 		}	
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
-		
+		return contextPoint;
 	}
 	
 	/**
