@@ -1,5 +1,3 @@
-import api.YouTubeAPI;
-import api.YouTubeChannel;
 import api.YouTubePlaylist;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
@@ -22,8 +20,6 @@ public class SharkPlaylist {
 	private SpatialSemanticTag location;
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
-	private YouTubePlaylist playlist;
-	private YouTubeKnowledgeBase ytkb;
 	
 	/**
 	 * import the playlist

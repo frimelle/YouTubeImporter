@@ -1,4 +1,3 @@
-import api.YouTubeAPI;
 import api.YouTubeChannel;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
@@ -9,8 +8,7 @@ import net.sharkfw.knowledgeBase.TimeSemanticTag;
 import net.sharkfw.system.L;
 
 /**
- * 
- *
+ * class SharkChannel
  */
 public class SharkChannel {
 	private PeerSemanticTag originator;
@@ -29,22 +27,23 @@ public class SharkChannel {
 	 * @return ContextPoint contextPoint
 	 */
 	public ContextPoint importChannel(YouTubeChannel channel, YouTubeKnowledgeBase ytkb) {
-		originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
-		peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
-		remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
-		topic = 		ytkb.createYTSemanticTag(channel.getTitle(), channel.getUrl());
-		time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
-		location = null; //TODO getCountryCode()
-
-		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
+		originator = ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
+		peer = ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		remotePeer = ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		topic = ytkb.createYTSemanticTag(channel.getTitle(), channel.getUrl());
+		time = ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
+		location = null; // TODO getCountryCode()
+		
+		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
 		return contextPoint;
 	}
+
 	/**
 	 * return String made of the context point
 	 */
-	 public String toString() {
-		  return L.cp2String(contextPoint);
+	public String toString() {
+		return L.cp2String(contextPoint);
 	}
 
 	/**
@@ -55,7 +54,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param PeerSemanticTag originator
+	 * @param PeerSemanticTag
+	 *            originator
 	 */
 	public void setOriginator(PeerSemanticTag originator) {
 		this.originator = originator;
@@ -69,7 +69,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param PeerSemanticTag peer
+	 * @param PeerSemanticTag
+	 *            peer
 	 */
 	public void setPeer(PeerSemanticTag peer) {
 		this.peer = peer;
@@ -83,7 +84,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param PeerSemanticTag remotePeer
+	 * @param PeerSemanticTag
+	 *            remotePeer
 	 */
 	public void setRemotePeer(PeerSemanticTag remotePeer) {
 		this.remotePeer = remotePeer;
@@ -97,7 +99,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param SemanticTag topic
+	 * @param SemanticTag
+	 *            topic
 	 */
 	public void setTopic(SemanticTag topic) {
 		this.topic = topic;
@@ -111,7 +114,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param TimeSemanticTag time
+	 * @param TimeSemanticTag
+	 *            time
 	 */
 	public void setTime(TimeSemanticTag time) {
 		this.time = time;
@@ -125,7 +129,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param SpatialSemanticTag location
+	 * @param SpatialSemanticTag
+	 *            location
 	 */
 	public void setLocation(SpatialSemanticTag location) {
 		this.location = location;
@@ -139,7 +144,8 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param ContextCoordinates contextCoordinates
+	 * @param ContextCoordinates
+	 *            contextCoordinates
 	 */
 	public void setContextCoordinates(ContextCoordinates contextCoordinates) {
 		this.contextCoordinates = contextCoordinates;
@@ -153,10 +159,11 @@ public class SharkChannel {
 	}
 
 	/**
-	 * @param ContextPoint contextPoint
+	 * @param ContextPoint
+	 *            contextPoint
 	 */
 	public void setContextPoint(ContextPoint contextPoint) {
 		this.contextPoint = contextPoint;
 	}
-	
+
 }

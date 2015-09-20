@@ -1,8 +1,4 @@
 import java.util.Scanner;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
-import net.sharkfw.knowledgeBase.ContextPoint;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -16,9 +12,13 @@ public class Main {
     	YouTubeAPI api = new YouTubeAPI(apiKey);
 		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
 		
+		YouTubePlaylist playlist = null;
+		YouTubeChannel channel = null;
+		YouTubeVideo video = null;
+		
     	try {    		
     		System.out.println("--------Returning Video Test Data--------");
-    		YouTubeVideo video = api.getVideoById(videoID);
+    		video = api.getVideoById(videoID);
     		System.out.println(video.getTitle());
     		System.out.println(video.getId());
     		System.out.println(video.getChannelId());
@@ -37,7 +37,7 @@ public class Main {
     		System.out.println(video.getUrl()); 
     		
     		System.out.println("\n\n--------Returning Channel Test Data--------");
-    		YouTubeChannel channel = api.getChannelByName(channelName);
+    		channel = api.getChannelByName(channelName);
     		System.out.println(channel.getId());
     		System.out.println(channel.getTitle());
     		System.out.println(channel.getCountryCode());
@@ -50,20 +50,20 @@ public class Main {
     		System.out.println(channel.getUploadedVideosPlaylistId());
     		System.out.println(channel.getUrl());
     		
-//    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
-//    		YouTubePlaylist playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-//    		System.out.println(playlist.getTitle());
-//    		System.out.println(playlist.getId());
-//    		System.out.println(playlist.getChannelId());
-//    		System.out.println(playlist.getChannelTitle());
-//    		System.out.println(playlist.getDescription());
-//    		System.out.println(playlist.getThumbnailUrl());
-//    		System.out.println(playlist.getUrl());
-//    		int counter = 1;
-//    		for (String videoId: playlist.getVideoIds()) {
-//    			System.out.println(counter + ": "+ videoId);
-//    			counter++;
-//    		}
+    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
+    		playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+    		System.out.println(playlist.getTitle());
+    		System.out.println(playlist.getId());
+    		System.out.println(playlist.getChannelId());
+    		System.out.println(playlist.getChannelTitle());
+    		System.out.println(playlist.getDescription());
+    		System.out.println(playlist.getThumbnailUrl());
+    		System.out.println(playlist.getUrl());
+    		int counter = 1;
+    		for (String videoId: playlist.getVideoIds()) {
+    			System.out.println(counter + ": "+ videoId);
+    			counter++;
+    		}
     		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,10 +71,10 @@ public class Main {
 		/*
 		 * Properly creating video, channel and playlist
 		 */
-		SharkImporter importer = new SharkImporter(ytkb, apiKey);
-		importer.importVideo(videoID);
-		importer.importChannel(channelName);
-		importer.importPlaylist(channelName);
+		SharkImporter importer = new SharkImporter(ytkb);
+		importer.importVideo(video);
+		importer.importChannel(channel);
+		importer.importPlaylist(playlist);
 		
 		
 		/*
@@ -83,7 +83,7 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please enter a Video ID:");
 		String videoURLUser = scanner.nextLine();
-		YouTubeVideo video;
+
 		try {
 			// Video
 			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
@@ -91,12 +91,12 @@ public class Main {
 			sharkVideo.importVideo(video, ytkb);	
 		    System.out.println("Video:" + '\n' + sharkVideo.toString());
 		    // Channel
-		    YouTubeChannel channel = api.getChannelByName(channelName);
+		    channel = api.getChannelByName(channelName);
 		    SharkChannel sharkChannel = new SharkChannel();
 		    sharkChannel.importChannel(channel, ytkb);
 		    System.out.println("Channel" + '\n' + sharkChannel.toString());
 		    // Playlist
-		    YouTubePlaylist playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+		    playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
 		    SharkPlaylist sharkPlaylist = new SharkPlaylist();
 		    sharkPlaylist.importPlaylist(playlist, ytkb);
 		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
