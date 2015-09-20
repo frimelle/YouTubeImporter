@@ -22,31 +22,33 @@ public class SharkPlaylist {
 	private SpatialSemanticTag location;
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
+	private YouTubePlaylist playlist;
+	private YouTubeKnowledgeBase ytkb;
 	
 	/**
 	 * Constructor for the playlist
 	 * @param channelName
 	 */
-	public SharkPlaylist(String channelName) {
-		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-		YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
-		YouTubeChannel channel = null;
-		try {
-			channel = api.getChannelByName(channelName);
-			YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//originator = 		ytkb.createYTPeerSemanticTag(playlist.channelTitle(), "URL", null); //make that
-		//peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-		//remotePeer = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-		//topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
-		//time = 			ytkb.createYTTimeSemanticTag(sni.getPublishedAt(), 0); //not written yet
+	public SharkPlaylist(YouTubePlaylist playlist, YouTubeKnowledgeBase ytkb) {
+		this.playlist = playlist;
+		this.ytkb = ytkb;
+	}
+	
+	/**
+	 * import the playlist
+	 * @return ContextPoint contextPoint
+	 */
+	public ContextPoint importPlaylist() {
+		originator = 		ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "URL", null); //make that
+		peer = 				ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
+		remotePeer = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
+		topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
+		//time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAt(), 0); //not written yet
 		location =			null;
 		
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 	}
 	
 	/**

@@ -21,22 +21,23 @@ public class SharkChannel {
 	private SpatialSemanticTag location;
 	private ContextCoordinates contextCoordinates;
 	private ContextPoint contextPoint;
+	YouTubeChannel channel;
+	YouTubeKnowledgeBase ytkb;
 	
 	/**
 	 * Constructor for the Channel
 	 * @param channelName
 	 */
-	public SharkChannel(String channelName) {
-		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-		YouTubeAPI api = new YouTubeAPI("AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8");	
-		
-		YouTubeChannel channel = null;
-		try {
-			channel = api.getChannelByName(channelName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+	public SharkChannel(YouTubeChannel channel, YouTubeKnowledgeBase ytkb) {
+		this.channel = channel;
+		this.ytkb = ytkb;
+	}
+	
+	/**
+	 * import the channel
+	 * @return ContextPoint contextPoint
+	 */
+	public ContextPoint importChannel() {
 		originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
 		peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
 		remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
@@ -48,8 +49,8 @@ public class SharkChannel {
 //		}	
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 	}
-	
 	/**
 	 * return String made of the context point
 	 */
