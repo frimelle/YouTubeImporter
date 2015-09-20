@@ -46,6 +46,9 @@ public class SharkVideo {
 		
 	}
 	
+	/**
+	 * return String made of the context point
+	 */
 	 public String toString() {
 		  return L.cp2String(contextPoint);
 	}
