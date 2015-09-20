@@ -69,7 +69,7 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public ContextPoint importPlaylist(String playlistName, String channelName){
+	public ContextPoint importPlaylist(String channelName){
 
 		YouTubePlaylist playlist = null;
 		YouTubeChannel channel = null;
