@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import api.YouTubeAPI;
 import api.YouTubeChannel;
-import api.YouTubeKnowledgeBase;
 import api.YouTubePlaylist;
 import api.YouTubeVideo;
 import net.sharkfw.knowledgeBase.ContextCoordinates;

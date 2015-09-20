@@ -1,6 +1,5 @@
 import api.YouTubeAPI;
 import api.YouTubeChannel;
-import api.YouTubeKnowledgeBase;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
