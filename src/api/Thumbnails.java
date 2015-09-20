@@ -1,3 +1,4 @@
+package api;
 /**
  * Thumbnails sub class for YouTubePlaylist/Snippet Used to easily parse data
  * with GSON

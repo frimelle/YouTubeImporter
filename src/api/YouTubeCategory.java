@@ -1,3 +1,5 @@
+package api;
+
 public class YouTubeCategory {
 
 	private String id;

@@ -1,3 +1,5 @@
+package api;
+
 /**
  * This class represents YouTube channels which represent user accounts on YouTube
  */
