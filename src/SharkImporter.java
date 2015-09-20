@@ -4,7 +4,13 @@ import java.util.Collection;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
 import api.YouTubeVideo;
+import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SpatialSemanticTag;
+import net.sharkfw.knowledgeBase.TimeSemanticTag;
+import net.sharkfw.system.L;
 
 /**
  * Class to add information to the Shark knowledge base
@@ -21,7 +27,7 @@ public class SharkImporter {
 	public SharkImporter(YouTubeKnowledgeBase ytkb) {
 		this.ytkb = ytkb;
 	}
-		
+
 	/**
 	 * Get and store information from API Videos calls in Shark Knowledgebase 
 	 */
@@ -29,7 +35,18 @@ public class SharkImporter {
 		if (video == null) {
 			throw new NullPointerException("Video is null.");
 		}
-		return new SharkVideo().importVideo(video, ytkb);
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		SemanticTag topic = 			ytkb.createYTSemanticTag(video.getDescription(), video.getUrl());
+		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0); //TODO replace duration with getRecordingTime()
+		SpatialSemanticTag location = 	null;
+		if (video.getLocation() != null){
+			location =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
+		}	
+		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
+		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 	}
 	
 	/**
@@ -41,29 +58,46 @@ public class SharkImporter {
 		}
 		Collection<ContextPoint> contextPointCollection = new ArrayList<ContextPoint>();
 		for(YouTubeVideo video : videos) {
-			contextPointCollection.add(new SharkVideo().importVideo(video, ytkb));
+			contextPointCollection.add(this.importVideo(video));
 		}
 		return contextPointCollection;
 	}
 	
-	
+
 	/**
 	 * Get and store information from API Channel calls in Shark Knowledgebase 
 	 */
-	public ContextPoint importChannel(YouTubeChannel channel){
+	public void importChannel(YouTubeChannel channel){
 		if (channel == null) {
 			throw new NullPointerException("Channel is null.");
 		}
-		return new SharkChannel().importChannel(channel, ytkb);
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
+		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		SemanticTag topic = 			ytkb.createYTSemanticTag(channel.getTitle(), channel.getUrl());
+		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
+		SpatialSemanticTag location = 	null;
+		
+		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
+		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
 	}
-	
+
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public ContextPoint importPlaylist(YouTubePlaylist playlist){
+	public void importPlaylist(YouTubePlaylist playlist){
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
-		return new SharkPlaylist().importPlaylist(playlist, ytkb);
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "ff", null); //make that
+		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
+		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
+		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
+		SpatialSemanticTag location =	null;
+		
+		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
+		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		
 	}
 }
