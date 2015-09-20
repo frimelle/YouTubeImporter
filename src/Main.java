@@ -31,6 +31,10 @@ public class Main {
     		YouTubeChannel channel = api.getChannelByName("PewDiePie");
     		System.out.println(channel.getId());
     		System.out.println(channel.getTitle());
+    		System.out.println(channel.getCountryCode());
+    		System.out.println(channel.getPublishedAt());
+    		System.out.println(channel.getDescription());
+    		System.out.println(channel.getThumbnailUrl());
     		System.out.println(channel.getGooglePlusUserId());
     		System.out.println(channel.getFavoritedVideosPlaylistId());
     		System.out.println(channel.getLikedVideosPlaylistId());
@@ -47,10 +51,10 @@ public class Main {
     		
     		Scanner scanner = new Scanner(System.in);
     		System.out.println("Please enter a Video ID:");
-    		String vidID = scanner.nextLine();
+    		//String vidID = scanner.nextLine();
     	    //SharkVideo sv = new SharkVideo(video); //use MDIUreSo0gI
     	    //System.out.println(sv.toString());
-    	    scanner.close();
+    	    //scanner.close();
     		
 		} catch (Exception e) {
 			e.printStackTrace();

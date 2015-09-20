@@ -1,23 +1,21 @@
 package api;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.joda.time.DateTime;
+
 /**
  * This class represents YouTube channels which represent user accounts on YouTube
  */
 public class YouTubeChannel {
 	
    	private String id;
-   	private String title;
     private ContentDetails contentDetails;
-
-    
-	public String getTitle() {
-		return title;
-	}
-	
-	public void setTitle(String title) {
-		this.title = title;
-	}	
-	
+    private Snippet snippet;
+    	
 	public String getId() {
 		return id;
 	}
@@ -63,6 +61,62 @@ public class YouTubeChannel {
 		}
 	}
 	
+	public String getThumbnailUrl() {
+		if (snippet != null) {
+			return snippet.getThumbnailUrl();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getTitle() {
+		if (snippet != null) {
+			return snippet.getTitle();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getDescription() {
+		if (snippet != null) {
+			return snippet.getDescription();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getCountryCode() {
+		if (snippet != null) {
+			return snippet.getCountry();
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * @return String Formatted representation of published date
+	 */
+	public String getPublishedAt() {
+		if (snippet != null) {
+			Date date = new Date(snippet.getPublishedAt());
+			Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return format.format(date);
+		} else {
+			return null;
+		}
+	}
+	
+	public long getPublishedAtTimestamp() {
+		if (snippet != null) {
+			return snippet.getPublishedAt();
+		} else {
+			return 0;
+		}
+	}
+	
+	
+
+	
     /**
      * ContentDetails sub class for YouTubeChannel
      * Used to easily parse data with GSON
@@ -75,11 +129,7 @@ public class YouTubeChannel {
 		public String getGooglePlusUserId() {
 			return googlePlusUserId;
 		}		
-		
-		public void setGooglePlusUserId(String googlePlusUserId) {
-			this.googlePlusUserId = googlePlusUserId;
-		}
-		
+				
 		public String getLikedVideos() {
 			if (relatedPlaylists != null) {
 				return relatedPlaylists.getLikes();
@@ -103,39 +153,82 @@ public class YouTubeChannel {
 				return null;
 			}
 		}
-		
+				
 	    /**
 	     * RelatedPlaylists sub class for YouTubeChannel/ContentDetails
 	     * Used to easily parse data with GSON
 	     */
 	    private static class RelatedPlaylists {
-	    		private String likes;
-	    		private String favorites;
-	    		private String uploads;
-	    		
-				public String getLikes() {
-					return likes;
-				}
-				
-				public void setLikes(String likes) {
-					this.likes = likes;
-				}
-				
-				public String getFavorites() {
-					return favorites;
-				}
-				
-				public void setFavorites(String favorites) {
-					this.favorites = favorites;
-				}
-				
-				public String getUploads() {
-					return uploads;
-				}
-				
-				public void setUploads(String uploads) {
-					this.uploads = uploads;
-				}
+    		private String likes;
+    		private String favorites;
+    		private String uploads;
+    		
+			public String getLikes() {
+				return likes;
+			}
+							
+			public String getFavorites() {
+				return favorites;
+			}
+							
+			public String getUploads() {
+				return uploads;
+			}				
 	    }
     }
+    
+	/**
+	 * Snippet sub class for YouTubeChannel used to easily parse data with GSON
+	 */
+	private static class Snippet {
+		private String title;
+		private String description;
+		private String publishedAt;
+		private String country;
+
+		public String getTitle() {
+			return title;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public long getPublishedAt() {
+			if (publishedAt != null) {
+				try {
+					DateTime dt = new DateTime(publishedAt);
+					return dt.getMillis();
+				} catch (Exception e) {
+					return 0;
+				}
+			}
+			return 0;
+		}
+		
+		public String getCountry() {
+			return country;
+		}
+
+		private Thumbnails thumbnails;
+
+		/**
+		 * @return String Thumbnail with the highest resolution available
+		 */
+		private String getThumbnailUrl() {
+			if (thumbnails == null) {
+				return null;
+			} else if (thumbnails.getMaxres() != null) {
+				return thumbnails.getMaxres().getUrl();
+			} else if (thumbnails.getStandard() != null) {
+				return thumbnails.getStandard().getUrl();
+			} else if (thumbnails.getHigh() != null) {
+				return thumbnails.getHigh().getUrl();
+			} else if (thumbnails.getMedium() != null) {
+				return thumbnails.getMedium().getUrl();
+			} else {
+				return null;
+			}
+		}
+	}
 }
