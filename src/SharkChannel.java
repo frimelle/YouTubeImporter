@@ -38,15 +38,13 @@ public class SharkChannel {
 	 * @return ContextPoint contextPoint
 	 */
 	public ContextPoint importChannel() {
-		originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), "URL", null);
-		peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
-		remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), "URL", null);
-		topic = 			ytkb.createYTSemanticTag(channel.getTitle(), "URL");
-//		time = 			ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
-//		location = null;
-//		if (video.getLocation() != null){
-//			locationVid =	ytkb.createYTSpatialSemanticTag(channel.getLocation().getLongitude(), channel.getLocation().getLatitude());
-//		}	
+		originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
+		peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
+		topic = 		ytkb.createYTSemanticTag(channel.getTitle(), channel.getUrl());
+		time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
+		location = null; //TODO getCountryCode()
+
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		contextPoint = ytkb.createContextPoint(contextCoordinates);
 		return contextPoint;

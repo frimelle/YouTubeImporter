@@ -35,10 +35,10 @@ public class SharkVideo {
 	
 	public ContextPoint importVideo() {
 		
-		originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-		peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-		remotePeer = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
-		topic = 			ytkb.createYTSemanticTag(video.getDescription(), "URL");
+		originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		remotePeer = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		topic = 		ytkb.createYTSemanticTag(video.getDescription(), video.getUrl());
 		time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0);
 		location = null;
 		if (video.getLocation() != null){
@@ -53,6 +53,9 @@ public class SharkVideo {
 	 * return String made of the context point
 	 */
 	 public String toString() {
+		  if(contextPoint == null){
+			  return "Error: empty ContextPoint";
+		  }
 		  return L.cp2String(contextPoint);
 	}
 

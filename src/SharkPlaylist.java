@@ -39,11 +39,11 @@ public class SharkPlaylist {
 	 * @return ContextPoint contextPoint
 	 */
 	public ContextPoint importPlaylist() {
-		originator = 		ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "URL", null); //make that
+		originator = 		ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "ff", null); //make that
 		peer = 				ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 		remotePeer = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 		topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
-		//time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAt(), 0); //not written yet
+		time = 				ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
 		location =			null;
 		
 		contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			

@@ -1,6 +1,11 @@
 package api;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+
+import org.joda.time.DateTime;
 
 public class YouTubePlaylist {
 	
@@ -69,6 +74,27 @@ public class YouTubePlaylist {
 			return null;
 		}
 	}
+	
+	/**
+	 * @return String Formatted representation of published date
+	 */
+	public String getPublishedAt() {
+		if (snippet != null) {
+			Date date = new Date(snippet.getPublishedAt());
+			Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return format.format(date);
+		} else {
+			return null;
+		}
+	}
+	
+	public long getPublishedAtTimestamp() {
+		if (snippet != null) {
+			return snippet.getPublishedAt();
+		} else {
+			return 0;
+		}
+	}
 
 	/**
 	 * Snippet sub class for YouTubePlaylist Used to easily parse data with GSON
@@ -79,6 +105,7 @@ public class YouTubePlaylist {
 		private String channelTitle;
 		private String title;
 		private String description;
+		private String publishedAt;
 
 		public String getChannelId() {
 			return channelId;
@@ -97,6 +124,18 @@ public class YouTubePlaylist {
 		}
 
 		private Thumbnails thumbnails;
+		
+		public long getPublishedAt() {
+			if (publishedAt != null) {
+				try {
+					DateTime dt = new DateTime(publishedAt);
+					return dt.getMillis();
+				} catch (Exception e) {
+					return 0;
+				}
+			}
+			return 0;
+		}
 
 		/**
 		 * @return String Thumbnail with the highest resolution available
