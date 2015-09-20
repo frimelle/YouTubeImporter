@@ -1,3 +1,5 @@
+package api;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -204,7 +206,7 @@ public class YouTubeAPI {
 	 * @return YouTubeVideo The object representing the video data
 	 * @throws Exception
 	 */
-	protected YouTubeVideo getVideoById(String id) throws Exception {
+	public YouTubeVideo getVideoById(String id) throws Exception {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		YouTubeVideo video = null;
 		parameters.add(new BasicNameValuePair("part", "snippet,recordingDetails"));
@@ -265,7 +267,7 @@ public class YouTubeAPI {
 	 * @return Collection<YouTubeCategory List of all YouTube categories
 	 * @throws Exception
 	 */
-	protected YouTubeCategory getCategoryById(String id) throws Exception {
+	public YouTubeCategory getCategoryById(String id) throws Exception {
 		//Only fetch categories from API if the current API instance has not fetched them yet
 		if (this.youtubeCategories == null) {
 			this.queryCategories();
