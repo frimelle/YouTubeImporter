@@ -34,7 +34,6 @@ public class SharkVideo {
 	}
 	
 	public ContextPoint importVideo() {
-		YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();
 		
 		originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 		peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);

@@ -34,13 +34,12 @@ public class SharkImporter {
 		try {
 			//take videoID from console
 			YouTubeVideo video = api.getVideoById(vid);//would be great if URL
-			YouTubeVideo.Snippet s = new YouTubeVideo.Snippet();	
-			
+
 			originatorVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			peerVid = 		ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			remotePeerVid = ytkb.createYTPeerSemanticTag(video.getChannelId(), "URL", null);
 			topicVid = 		ytkb.createYTSemanticTag(video.getDescription(), "URL");
-			timeVid = 		ytkb.createYTTimeSemanticTag(s.getPublishedAt(), 0);
+			timeVid = 		ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0);
 			if (video.getLocation() != null){
 				locationVid =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 			}else{
@@ -102,7 +101,6 @@ public class SharkImporter {
 		try {
 			YouTubeChannel channel = api.getChannelByName("PewDiePie");
 			YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
-			YouTubePlaylist.Snippet sni = new YouTubePlaylist.Snippet();
 			
 			//originatorPl = 	ytkb.createYTPeerSemanticTag(playlist.channelTitle(), "URL", null); //make that
 			peerPl = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);

@@ -105,7 +105,7 @@ public class YouTubeVideo {
 	/**
 	 * Snippet sub class for YouTubeVideo Used to easily parse data with GSON
 	 */
-	public static class Snippet {
+	private static class Snippet {
 
 		private String channelId;
 		private String channelTitle;

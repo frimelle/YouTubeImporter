@@ -58,7 +58,7 @@ public class YouTubePlaylist {
 	/**
 	 * Snippet sub class for YouTubePlaylist Used to easily parse data with GSON
 	 */
-	public static class Snippet {
+	private static class Snippet {
 
 		private String channelId;
 		private String channelTitle;
