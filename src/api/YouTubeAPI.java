@@ -155,11 +155,11 @@ public class YouTubeAPI {
 			try {
 				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
 				playlist = playlists.iterator().next();
+				playlist.setVideoIds(this.getPlayListItems(id));
 			} catch (NoSuchElementException e) {
 				//No channel found
 				playlist = null;
-			}
-			
+			}		
 
 		} catch(Exception e) {
 			throw e;
@@ -173,29 +173,43 @@ public class YouTubeAPI {
 	 * @return Collection<YouTubeVideo> Collection of YouTubeVideos returned by playlist
 	 * @throws Exception
 	 */
-	protected Collection<YouTubeVideo> getPlayListItems(String id) throws Exception {
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		Collection<YouTubeVideo> playlistItems = null;
-		parameters.add(new BasicNameValuePair("part", "contentDetails"));
-		parameters.add(new BasicNameValuePair("maxResults", "50")); //50 = max videos returned per result "page", default is only 5
-		parameters.add(new BasicNameValuePair("playlistId", id));
-		try {
-			URL requestUrl = getRequestUrl("playlistItems", parameters);
-			JsonElement jsonResponse = getRequestResponse(requestUrl);
-			JsonObject jsonObject = jsonResponse.getAsJsonObject();
-			JsonElement playListItems = jsonObject.get("items");
-			
-			Gson gson = new Gson();
-			
-			Collection<YouTubeVideo> playlistItemsPage = null;
-			
-			Type collectionType = new TypeToken<Collection<YouTubeVideo>>(){}.getType();
-			playlistItems = gson.fromJson(playListItems, collectionType);
-			
-			playlistItemsPage = this.getPlayListItems(id);
-		} catch(Exception e) {
-			throw e;
-		}
+	protected Collection<String> getPlayListItems(String id) throws Exception {
+		YouTubePlaylistItems playlistItemsPage = null;
+		Collection<String> playlistItems = new ArrayList<String>();
+		do {
+			List<NameValuePair> parameters = new ArrayList<NameValuePair>();			
+			parameters.add(new BasicNameValuePair("part", "contentDetails"));
+			parameters.add(new BasicNameValuePair("playlistId", id));
+			parameters.add(new BasicNameValuePair("maxResults", "50"));
+			if (playlistItemsPage != null && playlistItemsPage.getNextPageToken() != null) {
+				parameters.add(new BasicNameValuePair("pageToken", playlistItemsPage.getNextPageToken()));
+			}
+			/**
+			 * maxResults is set because default value for results per page are only 5
+			 * Reduces number of calls to fetch large playlists
+			 */
+			try {
+				URL requestUrl = getRequestUrl("playlistItems", parameters);
+				JsonElement jsonResponse = getRequestResponse(requestUrl);
+
+				Gson gson = new Gson();
+				
+				Type collectionType = new TypeToken<YouTubePlaylistItems>() {}.getType();
+				playlistItemsPage = gson.fromJson(jsonResponse, collectionType);
+				
+				if (playlistItemsPage == null) {
+					continue;
+				}
+				
+				Collection<String> videoIds = playlistItemsPage.getVideoIds();
+				if (videoIds != null) {
+					playlistItems.addAll(videoIds);
+				}	
+			} catch (Exception e) {
+				throw e;
+			}
+		} while (playlistItemsPage.getNextPageToken() != null);
+		
 		return playlistItems;
 	}
 	

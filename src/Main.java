@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -42,8 +44,8 @@ public class Main {
     		System.out.println(channel.getUploadedVideosPlaylistId());
     		System.out.println(channel.getUrl());
     		
-    		System.out.println("\n\n--------Returning Playlist Test Data--------");
-    		YouTubePlaylist playlist = api.getPlaylistById(channel.getLikedVideosPlaylistId());
+    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
+    		YouTubePlaylist playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
     		System.out.println(playlist.getTitle());
     		System.out.println(playlist.getId());
     		System.out.println(playlist.getChannelId());
@@ -51,6 +53,11 @@ public class Main {
     		System.out.println(playlist.getDescription());
     		System.out.println(playlist.getThumbnailUrl());
     		System.out.println(playlist.getUrl());
+    		int counter = 1;
+    		for (String videoId: playlist.getVideoIds()) {
+    			System.out.println(counter + ": "+ videoId);
+    			counter++;
+    		}
     		
     		//Scanner scanner = new Scanner(System.in);
     		//System.out.println("Please enter a Video ID:");

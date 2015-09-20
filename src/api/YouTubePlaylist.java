@@ -8,10 +8,14 @@ public class YouTubePlaylist {
 	
 	private String id;
 	private Snippet snippet;
-	private Collection<YouTubeVideo> videos;
+	private Collection<String> videoIds;
 
-	public Collection<YouTubeVideo> getVideos() {
-		return videos;
+	public Collection<String> getVideoIds() {
+		return videoIds;
+	}
+	
+	public void setVideoIds(Collection<String> videoIds) {
+		this.videoIds = videoIds;
 	}
 
 	public String getId() {
