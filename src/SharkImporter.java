@@ -28,6 +28,38 @@ public class SharkImporter {
 	}
 	
 	/**
+	 * 
+	 * @param String channelName
+	 * @param int options 
+	 * 1 => get playlist of uploaded videos
+	 * 2 => get playlist of favorited videos
+	 * 3 => get playlist of liked videos
+	 */
+	public void importAll(String channelName, int options) {
+		try{
+			YouTubeChannel channel = api.getChannelByName(channelName);
+			this.importChannel(channelName);
+			String playlistid = "";
+			switch(options) {
+				case 1: playlistid = channel.getUploadedVideosPlaylistId();
+						break;
+				case 2: playlistid = channel.getFavoritedVideosPlaylistId();
+						break;
+				case 3: playlistid = channel.getLikedVideosPlaylistId();
+						break;	
+			}
+			YouTubePlaylist playlist = api.getPlaylistById(playlistid);
+			this.importPlaylist(channelName);
+    		for (String videoID: playlist.getVideoIds()) {
+    			importVideo(videoID);;
+    		}
+    		System.out.println("fertich!");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Get and store information from API Videos calls in Shark Knowledgebase 
 	 */
 	public ContextPoint importVideo(String videoID){
@@ -40,8 +72,8 @@ public class SharkImporter {
 			e1.printStackTrace();
 		}
 		if (video != null){
-			SharkVideo sv = new SharkVideo(video, ytkb);
-			copo = sv.importVideo();
+			SharkVideo sv = new SharkVideo();
+			copo = sv.importVideo(video, ytkb);
 		}	
 		return copo;
 	}
@@ -60,8 +92,8 @@ public class SharkImporter {
 			e.printStackTrace();
 		}
 		if (channel != null){
-			SharkChannel sc = new SharkChannel(channel, ytkb);
-			copo = sc.importChannel();
+			SharkChannel sc = new SharkChannel();
+			copo = sc.importChannel(channel, ytkb);
 		}
 		return copo;
 	}
@@ -82,8 +114,8 @@ public class SharkImporter {
 			e.printStackTrace();
 		}
 		if (playlist != null){
-			SharkPlaylist sp = new SharkPlaylist(playlist, ytkb);
-			copo = sp.importPlaylist();
+			SharkPlaylist sp = new SharkPlaylist();
+			copo = sp.importPlaylist(playlist, ytkb);
 		}
 		return copo;
 	}

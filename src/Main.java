@@ -87,18 +87,18 @@ public class Main {
 		try {
 			// Video
 			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
-			SharkVideo sharkVideo = new SharkVideo(video, ytkb);
-			sharkVideo.importVideo();	
+			SharkVideo sharkVideo = new SharkVideo();
+			sharkVideo.importVideo(video, ytkb);	
 		    System.out.println("Video:" + '\n' + sharkVideo.toString());
 		    // Channel
 		    YouTubeChannel channel = api.getChannelByName(channelName);
-		    SharkChannel sharkChannel = new SharkChannel(channel, ytkb);
-		    sharkChannel.importChannel();
+		    SharkChannel sharkChannel = new SharkChannel();
+		    sharkChannel.importChannel(channel, ytkb);
 		    System.out.println("Channel" + '\n' + sharkChannel.toString());
 		    // Playlist
 		    YouTubePlaylist playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-		    SharkPlaylist sharkPlaylist = new SharkPlaylist(playlist, ytkb);
-		    sharkPlaylist.importPlaylist();
+		    SharkPlaylist sharkPlaylist = new SharkPlaylist();
+		    sharkPlaylist.importPlaylist(playlist, ytkb);
 		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
 		    scanner.close();
 		} catch (Exception e) {

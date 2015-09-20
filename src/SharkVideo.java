@@ -24,16 +24,7 @@ public class SharkVideo {
 	YouTubeVideo video ;
 	YouTubeKnowledgeBase ytkb;
 	
-	/**
-	 * Constructor for the video
-	 * @param videoID
-	 */
-	public SharkVideo(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
-		this.video = video;
-		this.ytkb = ytkb;
-	}
-	
-	public ContextPoint importVideo() {
+	public ContextPoint importVideo(YouTubeVideo video, YouTubeKnowledgeBase ytkb) {
 		
 		originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
 		peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());

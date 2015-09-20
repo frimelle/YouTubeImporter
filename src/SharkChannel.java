@@ -23,21 +23,12 @@ public class SharkChannel {
 	private ContextPoint contextPoint;
 	YouTubeChannel channel;
 	YouTubeKnowledgeBase ytkb;
-	
-	/**
-	 * Constructor for the Channel
-	 * @param channelName
-	 */
-	public SharkChannel(YouTubeChannel channel, YouTubeKnowledgeBase ytkb) {
-		this.channel = channel;
-		this.ytkb = ytkb;
-	}
-	
+
 	/**
 	 * import the channel
 	 * @return ContextPoint contextPoint
 	 */
-	public ContextPoint importChannel() {
+	public ContextPoint importChannel(YouTubeChannel channel, YouTubeKnowledgeBase ytkb) {
 		originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
 		peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
 		remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());

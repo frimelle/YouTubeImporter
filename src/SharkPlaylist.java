@@ -26,19 +26,10 @@ public class SharkPlaylist {
 	private YouTubeKnowledgeBase ytkb;
 	
 	/**
-	 * Constructor for the playlist
-	 * @param channelName
-	 */
-	public SharkPlaylist(YouTubePlaylist playlist, YouTubeKnowledgeBase ytkb) {
-		this.playlist = playlist;
-		this.ytkb = ytkb;
-	}
-	
-	/**
 	 * import the playlist
 	 * @return ContextPoint contextPoint
 	 */
-	public ContextPoint importPlaylist() {
+	public ContextPoint importPlaylist(YouTubePlaylist playlist, YouTubeKnowledgeBase ytkb) {
 		originator = 		ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "ff", null); //make that
 		peer = 				ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
 		remotePeer = 		ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
