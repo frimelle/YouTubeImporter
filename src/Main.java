@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
+import net.sharkfw.knowledgeBase.ContextPoint;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -10,10 +11,14 @@ import api.YouTubeVideo;
 public class Main {
     public static void main(String[] args)  {
     	String apiKey = "AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8";
+    	String videoID = "MDIUreSo0gI";
+    	String channelName = "PewDiePie";
     	YouTubeAPI api = new YouTubeAPI(apiKey);
+		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
+		
     	try {    		
     		System.out.println("--------Returning Video Test Data--------");
-    		YouTubeVideo video = api.getVideoById("MDIUreSo0gI");
+    		YouTubeVideo video = api.getVideoById(videoID);
     		System.out.println(video.getTitle());
     		System.out.println(video.getId());
     		System.out.println(video.getChannelId());
@@ -32,7 +37,7 @@ public class Main {
     		System.out.println(video.getUrl()); 
     		
     		System.out.println("\n\n--------Returning Channel Test Data--------");
-    		YouTubeChannel channel = api.getChannelByName("PewDiePie");
+    		YouTubeChannel channel = api.getChannelByName(channelName);
     		System.out.println(channel.getId());
     		System.out.println(channel.getTitle());
     		System.out.println(channel.getCountryCode());
@@ -60,19 +65,45 @@ public class Main {
 //    			counter++;
 //    		}
     		
-    		Scanner scanner = new Scanner(System.in);
-    		System.out.println("Please enter a Video ID:");
-    		String vidID = scanner.nextLine();
-    		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-    		SharkImporter si = new SharkImporter(ytkb, apiKey);
-    		SharkVideo sv = new SharkVideo(video, ytkb);
-    		//use MDIUreSo0gI
-    		sv.importVideo();
-    	    System.out.println(si.importVideo(vidID));
-    	    scanner.close();
-    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*
+		 * Properly creating video, channel and playlist
+		 */
+		SharkImporter importer = new SharkImporter(ytkb, apiKey);
+		importer.importVideo(videoID);
+		importer.importChannel(channelName);
+		importer.importPlaylist(channelName);
+		
+		
+		/*
+		 * for presentation creating the video, channel and playlist object and printing them
+		 */
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter a Video ID:");
+		String videoURLUser = scanner.nextLine();
+		YouTubeVideo video;
+		try {
+			// Video
+			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
+			SharkVideo sharkVideo = new SharkVideo(video, ytkb);
+			sharkVideo.importVideo();	
+		    System.out.println("Video:" + '\n' + sharkVideo.toString());
+		    // Channel
+		    YouTubeChannel channel = api.getChannelByName(channelName);
+		    SharkChannel sharkChannel = new SharkChannel(channel, ytkb);
+		    sharkChannel.importChannel();
+		    System.out.println("Channel" + '\n' + sharkChannel.toString());
+		    // Playlist
+		    YouTubePlaylist playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+		    SharkPlaylist sharkPlaylist = new SharkPlaylist(playlist, ytkb);
+		    sharkPlaylist.importPlaylist();
+		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
+		    scanner.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
     }
 }
