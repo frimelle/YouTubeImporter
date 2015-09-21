@@ -89,10 +89,10 @@ public class SharkImporter {
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
-		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), "ff", null); //make that
-		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), "URL", null);
-		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), "URL");
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), playlist.getUrl(), playlist.getUrl());
+		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
+		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), playlist.getUrl());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
 		SpatialSemanticTag location =	null;
 		
