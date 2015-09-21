@@ -6,12 +6,12 @@ import api.YouTubePlaylist;
 import api.YouTubeVideo;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
-import net.sharkfw.knowledgeBase.Interest;
+import net.sharkfw.knowledgeBase.Information;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
 import net.sharkfw.knowledgeBase.TimeSemanticTag;
-import net.sharkfw.system.L;
+
 
 /**
  * Class to add information to the Shark knowledge base
@@ -86,6 +86,9 @@ public class SharkImporter {
 
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
+	 * 
+	 * @param YouTubePlaylist playlist
+	 * @return ContextPoint contextPoint
 	 */
 	public ContextPoint importPlaylist(YouTubePlaylist playlist){
 		if (playlist == null) {
@@ -95,17 +98,16 @@ public class SharkImporter {
 		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
 		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
 		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), playlist.getUrl());
-		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
+		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0);
 		SpatialSemanticTag location =	null;
 		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
-		//create Interest for each video a playlist has
+		//create Information for each video a playlist has and store in the playlists contextPoint
 		for (String videoId: playlist.getVideoIds()) {
-			// figure the stuff with semantic tag set
 			if(videoId != null) {
-				//Interest video = ytkb.createYTInterest(videoId, originator, peers, remotePeers, times, locations);
-				// contextPoint.addInformation(video);
+				Information info = ytkb.createInfo(videoId, ".txt");//issue
+				contextPoint.addInformation(info);
 			}
 		}	
 		return contextPoint;	
