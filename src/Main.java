@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import net.sharkfw.system.L;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -72,38 +74,10 @@ public class Main {
 		 * Properly creating video, channel and playlist
 		 */
 		SharkImporter importer = new SharkImporter(ytkb);
-		importer.importVideo(video);
-		importer.importChannel(channel);
-		importer.importPlaylist(playlist);
-		
-		
-		/*
-		 * for presentation creating the video, channel and playlist object and printing them
-		 */
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please enter a Video ID:");
-		String videoURLUser = scanner.nextLine();
-
-		try {
-			// Video
-			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
-			SharkVideo sharkVideo = new SharkVideo();
-			sharkVideo.importVideo(video, ytkb);	
-		    System.out.println("Video:" + '\n' + sharkVideo.toString());
-		    // Channel
-		    channel = api.getChannelByName(channelName);
-		    SharkChannel sharkChannel = new SharkChannel();
-		    sharkChannel.importChannel(channel, ytkb);
-		    System.out.println("Channel" + '\n' + sharkChannel.toString());
-		    // Playlist
-		    playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-		    SharkPlaylist sharkPlaylist = new SharkPlaylist();
-		    sharkPlaylist.importPlaylist(playlist, ytkb);
-		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
-		    scanner.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		L.cp2String(importer.importVideo(video));
+		L.cp2String(importer.importChannel(channel));
+		L.cp2String(importer.importPlaylist(playlist));
+		 
 
     }
 }

@@ -67,7 +67,7 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Channel calls in Shark Knowledgebase 
 	 */
-	public void importChannel(YouTubeChannel channel){
+	public ContextPoint importChannel(YouTubeChannel channel){
 		if (channel == null) {
 			throw new NullPointerException("Channel is null.");
 		}
@@ -80,12 +80,13 @@ public class SharkImporter {
 		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 	}
 
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public void importPlaylist(YouTubePlaylist playlist){
+	public ContextPoint importPlaylist(YouTubePlaylist playlist){
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
@@ -96,8 +97,12 @@ public class SharkImporter {
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
 		SpatialSemanticTag location =	null;
 		
+		//create Interest for each video a playlist has
+		
+		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 		
 	}
 }
