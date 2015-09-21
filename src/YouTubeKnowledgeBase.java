@@ -1,18 +1,11 @@
-
-
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
-import net.sharkfw.knowledgeBase.Interest;
-import net.sharkfw.knowledgeBase.PeerSTSet;
+import net.sharkfw.knowledgeBase.Information;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
-import net.sharkfw.knowledgeBase.STSet;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCS;
-import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.SpatialSTSet;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
-import net.sharkfw.knowledgeBase.TimeSTSet;
 import net.sharkfw.knowledgeBase.TimeSemanticTag;
 import net.sharkfw.knowledgeBase.geom.SharkGeometry;
 import net.sharkfw.knowledgeBase.geom.inmemory.InMemoSharkGeometry;
@@ -71,7 +64,7 @@ public class YouTubeKnowledgeBase {
 	 }
 	 
 	 /**
-	  * create a SpatialSemanticTag
+	  * create a SpatialSemanticTag from longitude and latitude
 	  * 
 	  * @param double longi
 	  * @param double lati
@@ -89,10 +82,24 @@ public class YouTubeKnowledgeBase {
 	        return semanticTag;
 	 }
 	 
-	 public Interest createYTInterest(STSet topics, PeerSemanticTag originator, PeerSTSet peers, PeerSTSet remotePeers, TimeSTSet times, SpatialSTSet locations) {
-		Interest interest = InMemoSharkKB.createInMemoInterest(topics, originator, peers, remotePeers, times, locations, this.direction);
-		 return interest; 
-	 }
+	 /**
+	  * create an Information for videoId 
+	  * 
+	  * @param String vidId
+	  * @param String contentType
+	  * @return Information info
+	  */
+	 public Information createInfo(String vidId, String contentType){
+		 Information info = InMemoSharkKB.createInMemoInformation();
+		 info.setContent(vidId);
+		 try {
+			info.setName(vidId);
+		} catch (SharkKBException e) {
+			e.printStackTrace();
+		}
+		 info.setContentType(contentType);
+		 return info;
+	}
 	 
 	 /**
 	  * create ContextCoordinates
