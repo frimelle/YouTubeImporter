@@ -35,36 +35,36 @@ public class Main {
 	    		System.out.println("Altitude:" + video.getLocation().getAltitude());
     		}
     		System.out.println(video.getUrl()); 
-    		
-    		System.out.println("\n\n--------Returning Channel Test Data--------");
-    		channel = api.getChannelByName(channelName);
-    		System.out.println(channel.getId());
-    		System.out.println(channel.getTitle());
-    		System.out.println(channel.getCountryCode());
-    		System.out.println(channel.getPublishedAt());
-    		System.out.println(channel.getDescription());
-    		System.out.println(channel.getThumbnailUrl());
-    		System.out.println(channel.getGooglePlusUserId());
-    		System.out.println(channel.getFavoritedVideosPlaylistId());
-    		System.out.println(channel.getLikedVideosPlaylistId());
-    		System.out.println(channel.getUploadedVideosPlaylistId());
-    		System.out.println(channel.getUrl());
-    		
-    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
-    		playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-    		System.out.println(playlist.getTitle());
-    		System.out.println(playlist.getId());
-    		System.out.println(playlist.getChannelId());
-    		System.out.println(playlist.getChannelTitle());
-    		System.out.println(playlist.getDescription());
-    		System.out.println(playlist.getThumbnailUrl());
-    		System.out.println(playlist.getUrl());
-    		int counter = 1;
-    		for (String videoId: playlist.getVideoIds()) {
-    			System.out.println(counter + ": "+ videoId);
-    			counter++;
-    		}
-    		
+//    		
+//    		System.out.println("\n\n--------Returning Channel Test Data--------");
+//    		channel = api.getChannelByName(channelName);
+//    		System.out.println(channel.getId());
+//    		System.out.println(channel.getTitle());
+//    		System.out.println(channel.getCountryCode());
+//    		System.out.println(channel.getPublishedAt());
+//    		System.out.println(channel.getDescription());
+//    		System.out.println(channel.getThumbnailUrl());
+//    		System.out.println(channel.getGooglePlusUserId());
+//    		System.out.println(channel.getFavoritedVideosPlaylistId());
+//    		System.out.println(channel.getLikedVideosPlaylistId());
+//    		System.out.println(channel.getUploadedVideosPlaylistId());
+//    		System.out.println(channel.getUrl());
+//    		
+//    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
+//    		playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+//    		System.out.println(playlist.getTitle());
+//    		System.out.println(playlist.getId());
+//    		System.out.println(playlist.getChannelId());
+//    		System.out.println(playlist.getChannelTitle());
+//    		System.out.println(playlist.getDescription());
+//    		System.out.println(playlist.getThumbnailUrl());
+//    		System.out.println(playlist.getUrl());
+//    		int counter = 1;
+//    		for (String videoId: playlist.getVideoIds()) {
+//    			System.out.println(counter + ": "+ videoId);
+//    			counter++;
+//    		}
+//    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,37 +73,37 @@ public class Main {
 		 */
 		SharkImporter importer = new SharkImporter(ytkb);
 		importer.importVideo(video);
-		importer.importChannel(channel);
-		importer.importPlaylist(playlist);
+//		importer.importChannel(channel);
+//		importer.importPlaylist(playlist);
 		
 		
 		/*
 		 * for presentation creating the video, channel and playlist object and printing them
 		 */
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Please enter a Video ID:");
-		String videoURLUser = scanner.nextLine();
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.println("Please enter a Video ID:");
+//		String videoURLUser = scanner.nextLine();
 
-		try {
-			// Video
-			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
-			SharkVideo sharkVideo = new SharkVideo();
-			sharkVideo.importVideo(video, ytkb);	
-		    System.out.println("Video:" + '\n' + sharkVideo.toString());
-		    // Channel
-		    channel = api.getChannelByName(channelName);
-		    SharkChannel sharkChannel = new SharkChannel();
-		    sharkChannel.importChannel(channel, ytkb);
-		    System.out.println("Channel" + '\n' + sharkChannel.toString());
-		    // Playlist
-		    playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-		    SharkPlaylist sharkPlaylist = new SharkPlaylist();
-		    sharkPlaylist.importPlaylist(playlist, ytkb);
-		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
-		    scanner.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+//		try {
+//			// Video
+//			video = api.getVideoById(videoURLUser); //example: 5vrXKlO2Jbw
+//			SharkVideo sharkVideo = new SharkVideo();
+//			sharkVideo.importVideo(video, ytkb);	
+//		    System.out.println("Video:" + '\n' + sharkVideo.toString());
+//		    // Channel
+//		    channel = api.getChannelByName(channelName);
+//		    SharkChannel sharkChannel = new SharkChannel();
+//		    sharkChannel.importChannel(channel, ytkb);
+//		    System.out.println("Channel" + '\n' + sharkChannel.toString());
+//		    // Playlist
+//		    playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+//		    SharkPlaylist sharkPlaylist = new SharkPlaylist();
+//		    sharkPlaylist.importPlaylist(playlist, ytkb);
+//		    System.out.println("Playlist:" + '\n' + sharkPlaylist.toString());
+//		    scanner.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
 
     }
 }
