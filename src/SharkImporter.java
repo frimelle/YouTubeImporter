@@ -6,6 +6,7 @@ import api.YouTubePlaylist;
 import api.YouTubeVideo;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.Interest;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
@@ -97,12 +98,16 @@ public class SharkImporter {
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0); //not written yet
 		SpatialSemanticTag location =	null;
 		
-		//create Interest for each video a playlist has
-		
-		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
-		return contextPoint;
-		
+		//create Interest for each video a playlist has
+		for (String videoId: playlist.getVideoIds()) {
+			// figure the stuff with semantic tag set
+			if(videoId != null) {
+				//Interest video = ytkb.createYTInterest(videoId, originator, peers, remotePeers, times, locations);
+				// contextPoint.addInformation(video);
+			}
+		}	
+		return contextPoint;	
 	}
 }
