@@ -2,6 +2,7 @@ package api;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.DateTime;
@@ -16,6 +17,8 @@ public class YouTubeChannel {
    	private String id;
     private ContentDetails contentDetails;
     private Snippet snippet;
+    
+    private Collection<YouTubePlaylist> playlists;
     	
 	public String getId() {
 		return id;
@@ -93,6 +96,14 @@ public class YouTubeChannel {
 			return null;
 		}
 	}
+	
+    public void addYouTubePlaylist(YouTubePlaylist playlist) {
+    	playlists.add(playlist);
+    }
+    
+    public Collection<YouTubePlaylist> getPlaylists() {
+    	return playlists;
+    }
 	
 	/**
 	 * @return String Formatted representation of published date

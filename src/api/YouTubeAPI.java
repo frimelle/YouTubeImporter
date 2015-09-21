@@ -155,7 +155,7 @@ public class YouTubeAPI {
 			try {
 				//Just grabbing "first" result, since the API only returns exact matches / one result in any case
 				playlist = playlists.iterator().next();
-				playlist.setVideoIds(this.getPlayListItems(id));
+				playlist.addPlayListItems(this.getPlayListItems(id));
 			} catch (NoSuchElementException e) {
 				//No channel found
 				playlist = null;
@@ -173,9 +173,9 @@ public class YouTubeAPI {
 	 * @return Collection<YouTubeVideo> Collection of YouTubeVideos returned by playlist
 	 * @throws Exception
 	 */
-	protected Collection<String> getPlayListItems(String id) throws Exception {
+	protected Collection<YouTubePlaylistItems> getPlayListItems(String id) throws Exception {
 		YouTubePlaylistItems playlistItemsPage = null;
-		Collection<String> playlistItems = new ArrayList<String>();
+		Collection<YouTubePlaylistItems> playlistItems = new ArrayList<YouTubePlaylistItems>();
 		do {
 			List<NameValuePair> parameters = new ArrayList<NameValuePair>();			
 			parameters.add(new BasicNameValuePair("part", "contentDetails"));
@@ -201,10 +201,9 @@ public class YouTubeAPI {
 					continue;
 				}
 				
-				Collection<String> videoIds = playlistItemsPage.getVideoIds();
-				if (videoIds != null) {
-					playlistItems.addAll(videoIds);
-				}	
+
+				playlistItems.add(playlistItemsPage);
+				
 			} catch (Exception e) {
 				throw e;
 			}

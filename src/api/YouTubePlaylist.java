@@ -2,29 +2,39 @@ package api;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.DateTime;
 
 public class YouTubePlaylist {
-	
+
 	static final String URL_PREFIX = "https://www.youtube.com/playlist?list=";
-	
+
 	private String id;
 	private Snippet snippet;
-	private Collection<String> videoIds;
-
-	public Collection<String> getVideoIds() {
-		return videoIds;
-	}
-	
-	public void setVideoIds(Collection<String> videoIds) {
-		this.videoIds = videoIds;
-	}
+	private Collection<YouTubePlaylistItems> playListItems = new ArrayList<YouTubePlaylistItems>();
+	private Collection<YouTubeVideo> videos;
 
 	public String getId() {
 		return id;
+	}
+
+	public Collection<String> getVideoIds() {
+		Collection<String> videoIds = new ArrayList<String>();
+		for (YouTubePlaylistItems playListItemsCollection : this.playListItems) {
+			videoIds.addAll(playListItemsCollection.getVideoIds());
+		}
+		return videoIds;
+	}
+
+	public void addPlayListItems(YouTubePlaylistItems playListItems) {
+		this.playListItems.add(playListItems);
+	}
+
+	public void addPlayListItems(Collection<YouTubePlaylistItems> playListItems) {
+		this.playListItems.addAll(playListItems);
 	}
 
 	public String getThumbnailUrl() {
@@ -66,7 +76,7 @@ public class YouTubePlaylist {
 			return null;
 		}
 	}
-	
+
 	public String getUrl() {
 		if (getId() != null) {
 			return URL_PREFIX + getId();
@@ -74,7 +84,7 @@ public class YouTubePlaylist {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @return String Formatted representation of published date
 	 */
@@ -87,13 +97,21 @@ public class YouTubePlaylist {
 			return null;
 		}
 	}
-	
+
 	public long getPublishedAtTimestamp() {
 		if (snippet != null) {
 			return snippet.getPublishedAt();
 		} else {
 			return 0;
 		}
+	}
+
+	public void addYouTubeVideo(YouTubeVideo video) {
+		videos.add(video);
+	}
+
+	public Collection<YouTubeVideo> getVideos() {
+		return videos;
 	}
 
 	/**
@@ -124,7 +142,7 @@ public class YouTubePlaylist {
 		}
 
 		private Thumbnails thumbnails;
-		
+
 		public long getPublishedAt() {
 			if (publishedAt != null) {
 				try {
