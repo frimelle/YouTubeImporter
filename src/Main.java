@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import net.sharkfw.system.L;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -104,6 +106,11 @@ public class Main {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		} 
+
+		L.cp2String(importer.importVideo(video));
+		L.cp2String(importer.importChannel(channel));
+		L.cp2String(importer.importPlaylist(playlist));
+
 
     }
 }

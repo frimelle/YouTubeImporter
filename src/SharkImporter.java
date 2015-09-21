@@ -6,6 +6,7 @@ import api.YouTubePlaylist;
 import api.YouTubeVideo;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.Interest;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SpatialSemanticTag;
@@ -67,7 +68,7 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Channel calls in Shark Knowledgebase 
 	 */
-	public void importChannel(YouTubeChannel channel){
+	public ContextPoint importChannel(YouTubeChannel channel){
 		if (channel == null) {
 			throw new NullPointerException("Channel is null.");
 		}
@@ -80,12 +81,13 @@ public class SharkImporter {
 		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		return contextPoint;
 	}
 
 	/**
 	 * Get and store information from API Playlist calls in Shark Knowledgebase 
 	 */
-	public void importPlaylist(YouTubePlaylist playlist){
+	public ContextPoint importPlaylist(YouTubePlaylist playlist){
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
@@ -98,6 +100,14 @@ public class SharkImporter {
 		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
-		
+		//create Interest for each video a playlist has
+		for (String videoId: playlist.getVideoIds()) {
+			// figure the stuff with semantic tag set
+			if(videoId != null) {
+				//Interest video = ytkb.createYTInterest(videoId, originator, peers, remotePeers, times, locations);
+				// contextPoint.addInformation(video);
+			}
+		}	
+		return contextPoint;	
 	}
 }
