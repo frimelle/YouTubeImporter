@@ -14,8 +14,8 @@ public class YouTubeVideo {
 	private String id;
 	private Snippet snippet;
 	private RecordingDetails recordingDetails;
+	private YouTubeCategory youtubeCategory;
 	
-
 	public String getId() {
 		return id;
 	}
@@ -98,6 +98,14 @@ public class YouTubeVideo {
 		} else {
 			return null;
 		}
+	}
+	
+	public void setYouTubeCategory (YouTubeCategory youtubeCategory) {
+		this.youtubeCategory = youtubeCategory;
+	}
+	
+	public YouTubeCategory getYouTubeCategory () {
+		return this.youtubeCategory;
 	}
 
 	/**
