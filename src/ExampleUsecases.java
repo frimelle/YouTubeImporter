@@ -3,16 +3,15 @@ import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
 
-
 public class ExampleUsecases {
-   
+
     /**
      *
      * @param String channelName
      * @param String apiKey
      * @return String sharkKB
      */
-    public InMemoSharkKB importVideosFromChannel(String channelName, String apiKey ) {
+    public InMemoSharkKB importVideosFromChannel(String channelName, String apiKey) {
         YouTubeAPI api = new YouTubeAPI(apiKey);
         YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
         YouTubeChannel channel = null;
@@ -23,13 +22,13 @@ public class ExampleUsecases {
             si.importChannel(channel);
             playlist = api.getPlaylistById(channel.getUploadedVideosPlaylistId());
             si.importPlaylist(playlist);
-            for (String videoId: playlist.getVideoIds()) {
+            for (String videoId : playlist.getVideoIds()) {
                 si.importVideo(api.getVideoById(videoId));
-            }       
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
+
         return ytkb.getSharkKB();
     }
 }
