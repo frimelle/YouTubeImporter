@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
+import api.CountryMap;
+import api.Location;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
 import api.YouTubeVideo;
@@ -20,6 +22,8 @@ import net.sharkfw.knowledgeBase.TimeSemanticTag;
 
 public class SharkImporter {
 	
+	CountryMap countryMap;
+	
 	private YouTubeKnowledgeBase ytkb;
 
 	/**
@@ -27,6 +31,7 @@ public class SharkImporter {
 	 */
 	public SharkImporter(YouTubeKnowledgeBase ytkb) {
 		this.ytkb = ytkb;
+		countryMap = new CountryMap();
 	}
 
 	/**
@@ -96,8 +101,11 @@ public class SharkImporter {
 		PeerSemanticTag remotePeer = 	peer;
 		SemanticTag topic = 			ytkb.createYTSemanticTag(channel.getTitle(), channel.getId());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
-		SpatialSemanticTag location = 	null;
-		
+		Location channelLocation = countryMap.getCountryLocationByCode(channel.getCountryCode());
+		SpatialSemanticTag location = null;
+		if (channelLocation != null){
+			location = 	ytkb.createYTSpatialSemanticTag(channelLocation.getLongitude(), channelLocation.getLatitude());
+		}		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
 		return contextPoint;
