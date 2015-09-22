@@ -115,8 +115,49 @@ public class YouTubeAPI {
             // give multiple results
             Collection<YouTubeChannel> channels = null;
 
-            Type collectionType = new TypeToken<Collection<YouTubeChannel>>() {
-            }.getType();
+            Type collectionType = new TypeToken<Collection<YouTubeChannel>>() {}.getType();
+            channels = gson.fromJson(channelElement, collectionType);
+
+            try {
+                // Just grabbing "first" result, since the API only returns
+                // exact matches / one result in any case
+                channel = channels.iterator().next();
+            } catch (NoSuchElementException e) {
+                // No channel found
+                channel = null;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return channel;
+    }
+    
+    /**
+     * Builds a request to receive a YouTube Channel by its ID
+     * 
+     * @param id The Channel ID
+     * @return YouTubeChannel The object representing the Channel
+     * @throws Exception
+     */
+    public YouTubeChannel getChannelById(String id) throws Exception {
+        YouTubeChannel channel = null;
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+
+        parameters.add(new BasicNameValuePair("part", "contentDetails,snippet"));
+        parameters.add(new BasicNameValuePair("id", id));
+        try {
+            URL requestUrl = getRequestUrl("channels", parameters);
+            JsonElement jsonResponse = getRequestResponse(requestUrl);
+            JsonObject jsonObject = jsonResponse.getAsJsonObject();
+            JsonElement channelElement = jsonObject.get("items");
+
+            Gson gson = new Gson();
+
+            // Working with a collection because the JSON is built to possibly
+            // give multiple results
+            Collection<YouTubeChannel> channels = null;
+
+            Type collectionType = new TypeToken<Collection<YouTubeChannel>>() {}.getType();
             channels = gson.fromJson(channelElement, collectionType);
 
             try {
@@ -158,8 +199,7 @@ public class YouTubeAPI {
             // give multiple results
             Collection<YouTubePlaylist> playlists = null;
 
-            Type collectionType = new TypeToken<Collection<YouTubePlaylist>>() {
-            }.getType();
+            Type collectionType = new TypeToken<Collection<YouTubePlaylist>>() {}.getType();
             playlists = gson.fromJson(playListItems, collectionType);
 
             try {
@@ -206,8 +246,7 @@ public class YouTubeAPI {
 
                 Gson gson = new Gson();
 
-                Type collectionType = new TypeToken<YouTubePlaylistItems>() {
-                }.getType();
+                Type collectionType = new TypeToken<YouTubePlaylistItems>() {}.getType();
                 playlistItemsPage = gson.fromJson(jsonResponse, collectionType);
 
                 if (playlistItemsPage == null) {
@@ -246,13 +285,13 @@ public class YouTubeAPI {
 
             Collection<YouTubeVideo> videos = null;
 
-            Type collectionType = new TypeToken<Collection<YouTubeVideo>>() {
-            }.getType();
+            Type collectionType = new TypeToken<Collection<YouTubeVideo>>() {}.getType();
             videos = gson.fromJson(playListItems, collectionType);
             try {
                 // Just grabbing "first" result, since the API only returns
                 // exact matches / one result in any case
                 video = videos.iterator().next();
+                video.setYouTubeCategory(this.getCategoryById(video.getCategoryId()));
             } catch (NoSuchElementException e) {
                 // No video found
                 video = null;
@@ -300,8 +339,7 @@ public class YouTubeAPI {
 
             Gson gson = new Gson();
 
-            Type collectionType = new TypeToken<Collection<YouTubeCategory>>() {
-            }.getType();
+            Type collectionType = new TypeToken<Collection<YouTubeCategory>>() {}.getType();
             this.youtubeCategories = gson.fromJson(playListItems, collectionType);
 
         } catch (Exception e) {

@@ -110,8 +110,7 @@ public class YouTubeKnowledgeBase {
      * @param TimeSemanticTag location
      * @return ContextCoordinates cc
      */
-    public ContextCoordinates createContextCoordinates(SemanticTag topic, PeerSemanticTag originator, PeerSemanticTag peer, PeerSemanticTag remotepeer, TimeSemanticTag time,
-            SpatialSemanticTag location) {
+    public ContextCoordinates createContextCoordinates(SemanticTag topic, PeerSemanticTag originator, PeerSemanticTag peer, PeerSemanticTag remotepeer, TimeSemanticTag time, SpatialSemanticTag location) {
         ContextCoordinates cc = null;
         try {
             cc = sharkKB.createContextCoordinates(topic, originator, peer, remotepeer, time, location, this.direction);

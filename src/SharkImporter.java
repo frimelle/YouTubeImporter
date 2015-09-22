@@ -26,16 +26,21 @@ public class SharkImporter {
 
     private YouTubeKnowledgeBase ytkb;
 
+
     /**
-     * Constructor
+     * 
+     * @param ytkb The Knowledgebase used for this importer
      */
     public SharkImporter(YouTubeKnowledgeBase ytkb) {
         this.ytkb = ytkb;
         countryMap = new CountryMap();
     }
 
+
     /**
-     * Get and store information from API Videos calls in Shark Knowledgebase
+     * Get and store a YouTubeVideo in a knowledgebase
+     * @param video The YouTubeVideo which is to be stored
+     * @return The context point which is returned
      */
     public ContextPoint importVideo(YouTubeVideo video) {
         if (video == null) {
@@ -55,6 +60,12 @@ public class SharkImporter {
         return contextPoint;
     }
 
+    /**
+     * Get and store a YouTubeVideo in a knowledgebase
+     * @param video The YouTubeVideo which is to be stored
+     * @param playlistId An additional playlist ID which is used as a peer and remote peer
+     * @return The context point which is returned
+     */
     public ContextPoint importVideo(YouTubeVideo video, String playlistId) {
         if (video == null) {
             throw new NullPointerException("Video is null.");
@@ -75,6 +86,8 @@ public class SharkImporter {
 
     /**
      * Get and store information from API Videos calls in Shark Knowledgebase
+     * @param videos The YouTubeVideo which is to be stored
+     * @return The context point collection which is returned
      */
     public Collection<ContextPoint> importVideo(Collection<YouTubeVideo> videos) {
         if (videos == null) {
@@ -86,11 +99,32 @@ public class SharkImporter {
         }
         return contextPointCollection;
     }
+    
+    /**
+     * Get and store information from API Videos calls in Shark Knowledgebase
+     * @param videos The YouTubeVideo which needs to be stored
+     * @param playlistId An additional playlist ID which is used as a peer and remote peer
+     * @return The context point collection which is created
+     */
+    public Collection<ContextPoint> importVideo(Collection<YouTubeVideo> videos, String playlistId) {
+        if (videos == null) {
+            throw new NullPointerException("Video is null.");
+        }
+        Collection<ContextPoint> contextPointCollection = new ArrayList<ContextPoint>();
+        for (YouTubeVideo video : videos) {
+            contextPointCollection.add(this.importVideo(video, playlistId));
+        }
+        return contextPointCollection;
+    }
+
 
     /**
      * Get and store information from API Channel calls in Shark Knowledgebase
+     * @param channel The YouTubeVideo which is to be stored
+     * @return
      */
     public ContextPoint importChannel(YouTubeChannel channel) {
+        
         if (channel == null) {
             throw new NullPointerException("Channel is null.");
         }
@@ -109,8 +143,7 @@ public class SharkImporter {
         ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
         if (channel.getGooglePlusUserId() != null) {
             Information googlePlusId = ytkb.createInfo(channel.getGooglePlusUserId(), "text/plain");
-            contextPoint.addInformation(googlePlusId); // so the ID isn't lost
-                                                       // in case there is one
+            contextPoint.addInformation(googlePlusId); // so the ID isn't lost in case there is one
         }
 
         return contextPoint;
@@ -119,8 +152,7 @@ public class SharkImporter {
     /**
      * Get and store information from API Playlist calls in Shark Knowledgebase
      * 
-     * @param YouTubePlaylist
-     *            playlist
+     * @param YouTubePlaylist playlist
      * @return ContextPoint contextPoint
      */
     public ContextPoint importPlaylist(YouTubePlaylist playlist) {
