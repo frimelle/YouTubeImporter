@@ -38,6 +38,9 @@ Context coordinates and context points are very important to the structure of sh
 ## Video in Shark
 
 This is the description of the YouTube Video in the semantic structure of Shark.
+
+![Video Diagram](https://github.com/frimelle/YouTubeImporter/blob/master/VideoDiagram.PNG "VideoDiagram")
+
 The SI is set to the video URL and the address is set to the videoId so the video becomes identifiable and searchable in a context space.
 
 ### Originator
