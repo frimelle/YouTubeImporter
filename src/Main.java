@@ -83,7 +83,7 @@ public class Main {
        
         System.out.println("\n\n--------Example Usecases - Printing SharkKB of importing all Videos of a Playlist--------");
         ExampleUsecases eu = new ExampleUsecases();
-        System.out.println(eu.importVideosFromChannel(channelName, apiKey));
+        System.out.println(L.kb2String(eu.importVideosFromChannel(channelName, apiKey)));
 
     }
 }

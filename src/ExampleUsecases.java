@@ -1,5 +1,4 @@
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
-import net.sharkfw.system.L;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
 import api.YouTubePlaylist;
@@ -13,7 +12,7 @@ public class ExampleUsecases {
      * @param String apiKey
      * @return String sharkKB
      */
-    public String importVideosFromChannel(String channelName, String apiKey ) {
+    public InMemoSharkKB importVideosFromChannel(String channelName, String apiKey ) {
         YouTubeAPI api = new YouTubeAPI(apiKey);
         YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
         YouTubeChannel channel = null;
@@ -31,6 +30,6 @@ public class ExampleUsecases {
             e.printStackTrace();
         }
        
-        return L.kb2String(ytkb.getSharkKB());
+        return ytkb.getSharkKB();
     }
 }

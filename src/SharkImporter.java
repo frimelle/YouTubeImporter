@@ -38,7 +38,7 @@ public class SharkImporter {
 		}
 		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
 		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(video.getId(), video.getUrl(), video.getUrl());
-		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(video.getId(), video.getUrl(), video.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(video.getTitle(), video.getUrl(), video.getUrl());
 		SemanticTag topic = 			ytkb.createYTSemanticTag(video.getDescription(), video.getUrl());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0); //TODO replace duration with getRecordingTime()
 		SpatialSemanticTag location = 	null;
@@ -74,8 +74,8 @@ public class SharkImporter {
 		}
 		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(channel.getGooglePlusUserId(), channel.getUrl(), channel.getUrl());
 		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
-		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getId(), channel.getUrl(), channel.getUrl());
-		SemanticTag topic = 			ytkb.createYTSemanticTag(channel.getTitle(), channel.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(channel.getTitle(), channel.getUrl(), channel.getUrl());
+		SemanticTag topic = 			ytkb.createYTSemanticTag(channel.getDescription(), channel.getUrl());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
 		SpatialSemanticTag location = 	null;
 		
@@ -94,10 +94,10 @@ public class SharkImporter {
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
-		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(playlist.getChannelTitle(), playlist.getUrl(), playlist.getUrl());
-		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
-		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
-		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getTitle(), playlist.getUrl());
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(playlist.getChannelId(), playlist.getUrl(), playlist.getUrl());
+		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(playlist.getId(), playlist.getUrl(), playlist.getUrl());
+		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(playlist.getTitle(), playlist.getUrl(), playlist.getUrl());
+		SemanticTag topic = 			ytkb.createYTSemanticTag(playlist.getDescription(), playlist.getUrl());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(playlist.getPublishedAtTimestamp(), 0);
 		SpatialSemanticTag location =	null;
 		
