@@ -36,7 +36,7 @@ public class SharkImporter {
 		if (video == null) {
 			throw new NullPointerException("Video is null.");
 		}
-		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
+		PeerSemanticTag originator = 	ytkb.createYTPeerSemanticTag(video.getId(), video.getUrl(), video.getUrl());
 		PeerSemanticTag peer = 			ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
 		PeerSemanticTag remotePeer = 	ytkb.createYTPeerSemanticTag(video.getChannelId(), video.getUrl(), video.getUrl());
 		SemanticTag topic = 			ytkb.createYTSemanticTag(video.getDescription(), video.getUrl());

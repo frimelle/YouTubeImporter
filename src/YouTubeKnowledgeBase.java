@@ -138,6 +138,14 @@ public class YouTubeKnowledgeBase {
 		 return cp;
 	 }
 	 
+     /**
+     *
+     * @return InMemoSharkKB sharkKB
+     */
+    public InMemoSharkKB getSharkKB() {
+        return this.sharkKB;
+    }
+	 
 	 /**
 	  * Set the direction
 	  * 

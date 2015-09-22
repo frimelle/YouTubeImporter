@@ -1,3 +1,4 @@
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import net.sharkfw.system.L;
 import api.YouTubeAPI;
 import api.YouTubeChannel;
@@ -5,82 +6,84 @@ import api.YouTubePlaylist;
 import api.YouTubeVideo;
 
 public class Main {
-    public static void main(String[] args)  {
-    	String apiKey = "AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8";
-    	String videoID = "MDIUreSo0gI";
-    	String channelName = "PewDiePie";
-    	YouTubeAPI api = new YouTubeAPI(apiKey);
-		YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
-		
-		YouTubePlaylist playlist = null;
-		YouTubeChannel channel = null;
-		YouTubeVideo video = null;
-		
-    	try {    		
-    		System.out.println("--------Returning Video Test Data--------");
-    		video = api.getVideoById(videoID);
-    		System.out.println(video.getTitle());
-    		System.out.println(video.getId());
-    		System.out.println(video.getChannelId());
-    		System.out.println(video.getChannelTitle());
-    		System.out.println(video.getDescription());
-    		System.out.println(video.getThumbnailUrl());
-    		System.out.println(video.getTags());
-    		System.out.println(video.getPublishedAt());    		
-    		System.out.println(api.getCategoryById(video.getCategoryId()).getTitle());
-    		if (video.getLocation() != null) {
-    			//Not many videos actually have location data attached to them
-	    		System.out.println("Latitude:" + video.getLocation().getLatitude());
-	    		System.out.println("Longitude:" + video.getLocation().getLongitude());
-	    		System.out.println("Altitude:" + video.getLocation().getAltitude());
-    		}
-    		System.out.println(video.getUrl()); 
-    		
-    		System.out.println("\n\n--------Returning Channel Test Data--------");
-    		channel = api.getChannelByName(channelName);
-    		System.out.println(channel.getId());
-    		System.out.println(channel.getTitle());
-    		System.out.println(channel.getCountryCode());
-    		System.out.println(channel.getPublishedAt());
-    		System.out.println(channel.getDescription());
-    		System.out.println(channel.getThumbnailUrl());
-    		System.out.println(channel.getGooglePlusUserId());
-    		System.out.println(channel.getFavoritedVideosPlaylistId());
-    		System.out.println(channel.getLikedVideosPlaylistId());
-    		System.out.println(channel.getUploadedVideosPlaylistId());
-    		System.out.println(channel.getUrl());
-    		
-    		System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
-    		playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
-    		System.out.println(playlist.getTitle());
-    		System.out.println(playlist.getId());
-    		System.out.println(playlist.getChannelId());
-    		System.out.println(playlist.getChannelTitle());
-    		System.out.println(playlist.getDescription());
-    		System.out.println(playlist.getThumbnailUrl());
-    		System.out.println(playlist.getUrl());
-//    		int counter = 1;
-//    		for (String videoId: playlist.getVideoIds()) {
-//    			System.out.println(counter + ": "+ videoId);
-//    			counter++;
-//    		}
-    		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		/*
-		 * Properly creating video, channel and playlist
-		 */
-    	System.out.println("\n\n--------Visualisation of the ContextPoints--------");
-		SharkImporter importer = new SharkImporter(ytkb);
-		System.out.println("\n\n--------ContextPoint of a Video--------");
-		System.out.println(L.cp2String(importer.importVideo(video)));
-		System.out.println("\n\n--------ContextPoint of a Channel--------");
-		System.out.println(L.cp2String(importer.importChannel(channel)));
-		System.out.println("\n\n--------ContextPoint of a Playlist--------");
-		System.out.println(L.cp2String(importer.importPlaylist(playlist)));
-
-
+   
+    public static void main(String[] args)  {   
+        String apiKey = "AIzaSyBZBT-ij4JblHC_HS5gv7tiJoLpwHlWjY8";
+        YouTubeAPI api = new YouTubeAPI(apiKey);
+        YouTubeKnowledgeBase ytkb = new YouTubeKnowledgeBase();
+        String videoID = "MDIUreSo0gI";
+        String channelName = "PewDiePie";
+       
+       
+        YouTubePlaylist playlist = null;
+        YouTubeChannel channel = null;
+        YouTubeVideo video = null;
+       
+        try {           
+            System.out.println("--------Returning Video Test Data--------");
+            video = api.getVideoById(videoID);
+            System.out.println(video.getTitle());
+            System.out.println(video.getId());
+            System.out.println(video.getChannelId());
+            System.out.println(video.getChannelTitle());
+            System.out.println(video.getDescription());
+            System.out.println(video.getThumbnailUrl());
+            System.out.println(video.getTags());
+            System.out.println(video.getPublishedAt());           
+            System.out.println(api.getCategoryById(video.getCategoryId()).getTitle());
+            if (video.getLocation() != null) {
+                //Not many videos actually have location data attached to them
+                System.out.println("Latitude:" + video.getLocation().getLatitude());
+                System.out.println("Longitude:" + video.getLocation().getLongitude());
+                System.out.println("Altitude:" + video.getLocation().getAltitude());
+            }
+            System.out.println(video.getUrl());
+           
+            System.out.println("\n\n--------Returning Channel Test Data--------");
+            channel = api.getChannelByName(channelName);
+            System.out.println(channel.getId());
+            System.out.println(channel.getTitle());
+            System.out.println(channel.getCountryCode());
+            System.out.println(channel.getPublishedAt());
+            System.out.println(channel.getDescription());
+            System.out.println(channel.getThumbnailUrl());
+            System.out.println(channel.getGooglePlusUserId());
+            System.out.println(channel.getFavoritedVideosPlaylistId());
+            System.out.println(channel.getLikedVideosPlaylistId());
+            System.out.println(channel.getUploadedVideosPlaylistId());
+            System.out.println(channel.getUrl());
+           
+            System.out.println("\n\n--------Returning Playlist Test Data (May take a while for large playlists)--------");
+            playlist = api.getPlaylistById(channel.getFavoritedVideosPlaylistId());
+            System.out.println(playlist.getTitle());
+            System.out.println(playlist.getId());
+            System.out.println(playlist.getChannelId());
+            System.out.println(playlist.getChannelTitle());
+            System.out.println(playlist.getDescription());
+            System.out.println(playlist.getThumbnailUrl());
+            System.out.println(playlist.getUrl());
+//            int counter = 1;
+//            for (String videoId: playlist.getVideoIds()) {
+//                System.out.println(counter + ": "+ videoId);
+//                counter++;
+//            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+   
+        System.out.println("\n\n--------Visualisation of the ContextPoints--------");
+        SharkImporter importer = new SharkImporter(ytkb);
+        System.out.println("\n\n--------ContextPoint of a Video--------");
+        System.out.println(L.cp2String(importer.importVideo(video)));
+        System.out.println("\n\n--------ContextPoint of a Channel--------");
+        System.out.println(L.cp2String(importer.importChannel(channel)));
+        System.out.println("\n\n--------ContextPoint of a Playlist--------");
+        System.out.println(L.cp2String(importer.importPlaylist(playlist)));
+       
+        System.out.println("\n\n--------Example Usecases - Printing SharkKB of importing all Videos of a Playlist--------");
+        ExampleUsecases eu = new ExampleUsecases();
+        System.out.println(eu.importVideosFromChannel(channelName, apiKey));
 
     }
 }
