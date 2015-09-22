@@ -3,13 +3,13 @@
 Submodule for Shark (SharedKnowledge)
 
 The YouTubeImporter is an extension to the SharedKnowledge (Shark) Framework. It's possible to import Videos, Channels and Playlist from YouTube in the semantic database of Shark.
-We decided to not build a pure importer except for our the ExampleUsage. The idea is, that it's possible to build a huge net of videos, channels and playlist. So it's possible to
+We decided to not build a pure importer except for the ExampleUsage. The idea is, that it's possible to build a huge net of videos, channels and playlist. 
 
 It's necessary to get an API key for the requests to the YouTube api.
 
 # YouTube in Shark
 
-We decided to have three possible context points, that are interconnected: the Video, the Playlist and the Channel. Following is the description how those are transformed into ContextPoints and imported into a Shark knowledgebase. Fitting the Sharkstructure to what we get from Youtube happens in the YouTubeKnowledgeBase. There the context coordinates are written into a shark knowledge base that is passed to the YouTubeKnowledgebase. Due to having to convert the parameter from YouTube three times, we decided we wanted to do the calculating in a different place. In the SharkImporter, the semantic tags can be filled with YouTube videos, channels and playlists. This is also where the mapping of the results from the YouTube api gets fitted with the structure of Shark.
+We decided to have three possible context points, that are interconnected: the Video, the Playlist and the Channel. Following is the description how these are transformed into ContextPoints and imported into a Shark knowledgebase. Fitting the Shark structure to what we get from Youtube happens in the YouTubeKnowledgeBase. There, the context coordinates are written into a shark knowledge base that is passed to the YouTubeKnowledgebase. Due to having to convert the parameter from YouTube three times, we decided we wanted to do the calculating in a different place. In the SharkImporter, the semantic tags can be filled with YouTube videos, channels and playlists. This is also where the mapping of the results from the YouTube api get fitted with the structure of Shark.
 Even though there are three different context points, they are comparable in their structure.
 
 ## Common Structure
@@ -21,7 +21,7 @@ The originator is always the id of the channel, the context point belongs to or 
 The peer is the unique identifier of the context point taken from the id they have in YouTube.
 
 ### Remote Peer
-The remote peer is the title of the context point in YouTube.
+The remote peer is, in our case the same as the peer.
 
 ### Topic
 The topic is the description of the video, playlist or channel in YouTube.
@@ -33,15 +33,15 @@ The time is the time it was published in YouTube
 If there is a location returned by the YouTube api it goes in here. The YouTubeKnowledgeBase will take longitude and latitude as provided by the YouTube api and transform it to WKT to pass it into the SpatialSemanticTag.
 
 ### ContextCoordinates and ContextPoint
-Context coordinates and context points are very important to the structure of shark and combine the previously named and created semantic Tags. Informations can be added to context coordinates, which was not for all the cases necessary in this case.
+Context coordinates and context points are very important to the structure of shark and combine the previously named and created semantic Tags. Informations can be added to context coordinates, which was not necessary for all the cases in this case.
 
 ## Video in Shark
 
 This is the description of the YouTube Video in the semantic structure of Shark.
-The adress and si are all set to the video Url.
+The adress is set to the videoId and the si is set to the video Url.
 
 ### Originator
-There are no users but only channels in YouTube so that's the creator and/or uploader of the video. Therefore the originator is a link to the creater/uploader by being filled with the id of the channel.
+There are no users but only channels in YouTube so that's the creator and/or uploader of the video. Therefore the originator is the channelId.
 
 ### Peer
 The peer is set to be the video id. That's how the video's context point is identifiable and searchable in a context space.
