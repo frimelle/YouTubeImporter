@@ -68,6 +68,8 @@ From those Tags a contextCoordinates is created and transformed to a contextPoin
 
 There are three different kinds of Playlist: the playlist from favorited Videos, from uploaded Videos and liked Videos of a certain channel (which is basically the same as a user in this case). We handle all those playlists the same. Playlists are mainly there to create a link between Videos and Channels beside the direct link they already have. It is an important part espacially when building a bigger semantic net of playlists.
 
+![Playlist Diagram](https://github.com/frimelle/YouTubeImporter/blob/master/PlaylistDiagram.PNG "PlaylistDiagram")
+
 Again the SI is the playlists URL and the address is the playlist ID.
 
 ### Originator
@@ -97,6 +99,8 @@ The informations are added to the context point after it is created from the con
 ## Channel in Shark
 
 The channel is very important to the structure of our model. It connects it to the social idea of shark by having an identifiable user ID and also connects it to the "outside world" in the way that it enables interaction with other google plus ids(so long as provided).
+
+![Channel Diagram](https://github.com/frimelle/YouTubeImporter/blob/master/ChannelDiagram.PNG "ChannelDiagram")
 
 ### Originator
 We originally made the originator with the google plus ID but not every channel necessarily has such an ID associated with it and soon google will make it possible to decouple the google plus account from the youtube account so we coudn't guarantee the ID to be not null. Our only other option was to use the channel ID which is not the best solution but for now that is what we got.
