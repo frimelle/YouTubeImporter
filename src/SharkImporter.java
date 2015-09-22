@@ -47,7 +47,7 @@ public class SharkImporter {
 		SemanticTag topic = 			ytkb.createYTSemanticTag(video.getYouTubeCategory().getTitle(), video.getId());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0); 
 		SpatialSemanticTag location = 	null;
-		if (video.getLocation() != null){
+		if (video.getLocation() != null) {
 			location =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 		}	
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
@@ -65,7 +65,7 @@ public class SharkImporter {
 		SemanticTag topic = 			ytkb.createYTSemanticTag(video.getYouTubeCategory().getTitle(), video.getId());
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(video.getPublishedAtTimestamp(), 0); 
 		SpatialSemanticTag location = 	null;
-		if (video.getLocation() != null){
+		if (video.getLocation() != null) {
 			location =	ytkb.createYTSpatialSemanticTag(video.getLocation().getLongitude(), video.getLocation().getLatitude());
 		}	
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);			
@@ -91,7 +91,7 @@ public class SharkImporter {
 	/**
 	 * Get and store information from API Channel calls in Shark Knowledgebase 
 	 */
-	public ContextPoint importChannel(YouTubeChannel channel){
+	public ContextPoint importChannel(YouTubeChannel channel) {
 		if (channel == null) {
 			throw new NullPointerException("Channel is null.");
 		}
@@ -103,11 +103,16 @@ public class SharkImporter {
 		TimeSemanticTag time = 			ytkb.createYTTimeSemanticTag(channel.getPublishedAtTimestamp(), 0);
 		Location channelLocation = countryMap.getCountryLocationByCode(channel.getCountryCode());
 		SpatialSemanticTag location = null;
-		if (channelLocation != null){
+		if (channelLocation != null) {
 			location = 	ytkb.createYTSpatialSemanticTag(channelLocation.getLongitude(), channelLocation.getLatitude());
 		}		
 		ContextCoordinates contextCoordinates = ytkb.createContextCoordinates(topic, originator, peer, remotePeer, time, location);
 		ContextPoint contextPoint = ytkb.createContextPoint(contextCoordinates);
+		if (channel.getGooglePlusUserId() != null) {
+			Information googlePlusId = ytkb.createInfo(channel.getGooglePlusUserId(), "text/plain");
+			contextPoint.addInformation(googlePlusId); //so the ID isn't lost in case there is one
+		}
+
 		return contextPoint;
 	}
 
@@ -117,7 +122,7 @@ public class SharkImporter {
 	 * @param YouTubePlaylist playlist
 	 * @return ContextPoint contextPoint
 	 */
-	public ContextPoint importPlaylist(YouTubePlaylist playlist){
+	public ContextPoint importPlaylist(YouTubePlaylist playlist) {
 		if (playlist == null) {
 			throw new NullPointerException("Playlist is null.");
 		}
@@ -133,7 +138,7 @@ public class SharkImporter {
 		//create Information for each video a playlist has and store in the playlists contextPoint
 		for (String videoId: playlist.getVideoIds()) {
 			if(videoId != null) {
-				Information info = ytkb.createInfo(videoId, ".txt");//issue
+				Information info = ytkb.createInfo(videoId, "text/plain");
 				contextPoint.addInformation(info);
 			}
 		}
