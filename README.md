@@ -30,7 +30,7 @@ The topic is the description of the video, playlist or channel in YouTube.
 The time is the time it was published in YouTube
 
 ### Location
-If there is a location returned by the YouTube api it goes in here
+If there is a location returned by the YouTube api it goes in here. The YouTubeKnowledgeBase will take longitude and latitude as provided by the YouTube api and transform it to WKT to pass it into the SpatialSemanticTag.
 
 ### ContextCoordinates and ContextPoint
 Context coordinates and context points are very important to the structure of shark and combine the previously named and created semantic Tags. Informations can be added to context coordinates, which was not for all the cases necessary in this case.
