@@ -47,7 +47,7 @@ The SI is set to the video URL and the address is set to the videoId so the vide
 There are no users but only channels in YouTube so that is the creator and/or uploader of the video. Therefore the originator is the channelId.
 
 ### Peer
-If the video comes from a playlist, the peer will be the playlistId. Otherwise it is equal to the originator.
+The peer is equal to the originator.
 
 ### RemotePeer
 The remote peer is equal to the peer.
@@ -60,6 +60,9 @@ The time when the video was published on YouTube.
 
 ### Location
 That is the location, YouTube returns for the video, set by the user where the video was recorded. This is often left empty and would result in the location being set to null.
+
+###Information
+The adding of an information ist optional. If the video comes from a playlist it is possible to add the ID. Otherwise the other method is used.
 
 ### ContextCoordinates and ContextPoint
 From those Tags a contextCoordinates is created and transformed to a contextPoint. Thereby we have the video created as a ContextPoint in the knowledgeBase where it can be worked with further.
