@@ -2,15 +2,19 @@
 
 Submodule for Shark (SharedKnowledge)
 
-The YouTubeImporter is an extension to the SharedKnowledge (Shark) Framework. It is possible to import Videos, Channels and Playlist from YouTube in the semantic database of Shark.
-We decided to not build a pure importer except for the ExampleUsage class. The idea is, that it is possible to build a huge net of videos, channels and playlist. 
+The YouTubeImporter is an extension to the SharedKnowledge (Shark) Framework. It is possible to import Videos, Channels and Playlists from YouTube into a Shark knowledgebase. An example of how to use the API to import data into a Shark KB can be found in the ExampleUsecases class.
+It is necessary to get an API key for the requests to the YouTube API. You may grab one for free at https://console.developers.google.com/
 
-It is necessary to get an API key for the requests to the YouTube API.
+# The YouTube API classes
+
+The classes we wrote to fetch data from YouTube make use of the GSON library to easily parse the json data we receive from the API to our Java class structure. Because of this, a lot of classes consist of inner helper classes with the sole purpose to match the YouTube data structure and make it available for objects of the specific class type. This also allows for easy extension of the classes, as it is only necessary to add the wanted fields / inner classes to the structure and allowing for GSON to do its "magic", filling them up with data without requiring any pre-defined setter methods.
+
+All requests are managed through the YouTubeAPI class, which returns (collections of) various YouTube objects, mainly representing channels, playlists and their videos.
 
 # YouTube in Shark
 
-We decided to have three possible context points, which are interconnected: the Video, the Playlist and the Channel. Following is the description how these are transformed into ContextPoints and imported into a Shark knowledgebase. Matching the Shark structure to what we get from YouTube happens in the YouTubeKnowledgeBase. There, the context coordinates are written into a shark knowledge base that is passed to the YouTubeKnowledgebase. Due to having to convert the parameter from YouTube three times, we decided that we wanted to do the calculating in a different place. In the SharkImporter, the semantic tags can be filled with YouTube videos, channels and playlists. This is also where the mapping of the results from the YouTube API get fitted with the structure of Shark.
-Even though there are three different context points, they are comparable in their structure.
+We decided to have three possible context points which are interconnected: The Video, the Playlist and the Channel. Following is the description how these are transformed into ContextPoints and imported into a Shark knowledgebase. For this purpose, we created the wrapper class YouTubeKnowledgeBase, which matches YouTube data to a accomodate for the structure used by Shark. In the SharkImporter, the semantic tags can be filled with YouTube videos, channels and playlists. This is also where the mapping of the results from the YouTube API gets matched to fit the structure of Shark.
+Even though there are three different context points, they are comparable in their general structure.
 
 ## Common Structure
 
